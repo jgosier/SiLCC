@@ -1,5 +1,10 @@
 import json
 j = open('geotagged_tweets_from_haiti.json')
+
 from pprint import pprint
-for i in j.readlines():
-    print i
+jsonobjects = [i for i in j]
+
+l = json.loads(jsonobjects[0])
+keys = l.keys()
+pprint(keys)
+
