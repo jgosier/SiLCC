@@ -1,0 +1,71 @@
+SiLCC
+
+===========
+Synopsis
+===========
+SiLCC aims to provide a learning NLP based relevancy filter/tagger/classifier that is 
+applied to the various information sources that Swift aggregates (RSS, twitter, SMS). 
+
+The functionality will be exposed using a RESTful API. Bindings wrapping that API for 
+several languages like Java, PHP, Ruby, Scala and Python will be developed.
+
+===========
+Approach
+===========
+To get started, we'll use the following approach
+1) Roughly define which functions we want to provide. Define the use cases for SiLCC
+	(e.g. filter the relevant items for this crisis from the given feed)
+2) Implement a prototype that provides these functions
+3) Define the API formally and expose the prototype's functions via the API
+4) Implement language bindings; in parallel improve/scale up the core implementation
+
+
+===========
+Dependecies
+===========
+Python 2.5+
+NLTK (Natural Language Toolkit)
+Numpy and Scipy
+
+============
+Installation
+============
+Linux
+* Ubuntu
+This has one of the easiest installations somewhat similar to other Linux distros
+
+~/username$ easy_install numpy
+~/username$ easy_install scipy (not sure about this check out http://scipy.org)
+~/username$ easy_install tkinter (GUIs helpful if you want to visualize your test features)
+
+
+MySQL 5.+
+
+PHP 5
+******
+I used PHP5 in order to install Gregarius (http://gregarius.net), this is a
+feed aggregator... I used twitter's search API (urls of a particular form)
+to get live streams from search words like #haiti, #haitiLive, etc. This is 
+part of the testing phase, where the algorithms are designed using a smaller 
+set of data, haiti data. Before, we can fully implement features for many 
+crises that could possibly happen in the future, we use this dataset for 
+research and development of such algorithms.
+
+The whole idea is buildinig a web service that other frameworks such as 
+Ushahidi's swift engine can interface through a RESTful interface.
+
+To use the python modules here correctly, please install Gregarius; this is
+only for testing purposes and should not be confused that this is part of 
+the final setup; refer to the swift river docs and links on the Google 
+swift river group
+
+No-SQL databases
+CouchDB implementation is going to be tested for continuous tweets
+
+====
+NOTE
+====
+Be sure to change the parameters for your database cursor in the code...
+You will find such settings in the <<test.py>> file. The files that contain
+run-able code are in <<gen.py>> and <<test.py>>
+
