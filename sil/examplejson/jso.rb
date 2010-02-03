@@ -4,12 +4,12 @@
 require "rubygems"
 require "json"
 
-tweets = []
+tweet_objects = []
 
 File.open('haiti_quake_backsearch_collected_data.json','r') do |f1|
 	while line = f1.gets()
-		tweets.push(line)
+		tweet_objects.push(JSON.parse(line))
 	end
 end
 
-puts tweets[0]
+puts tweet_objects[0]['text']
