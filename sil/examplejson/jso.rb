@@ -1,8 +1,8 @@
 # jso.rb
 # This parses through json files
 # Testing term extraction using Yahoo apis
-
-#require 'json'
+require "rubygems"
+require "json"
 
 tweets = []
 
@@ -11,3 +11,5 @@ File.open('haiti_quake_backsearch_collected_data.json','r') do |f1|
 		tweets.push(line)
 	end
 end
+
+puts tweets[0]
