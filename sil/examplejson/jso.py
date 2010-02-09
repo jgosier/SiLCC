@@ -87,6 +87,7 @@ def linkify_tweet(tweet):
         return nltk.tokenize.regexp_tokenize(text,pattern)
     """
 
+# punctuation is regex compile statement; much faster.
 punctuation = re.compile(r'[.,;:!]')
 
 def twitterSearch(feed):
@@ -146,21 +147,44 @@ def createTag(xdict):
         tagged_corpus.append(pos_tag(word_tokenize(text['text'])))
     return tagged_corpus
 
+# will use couchDB because of json support
 def connectToDatabase(db):
 
     conn = sqlite3.connect(db)
     return conn
 
-
+def askuser(tweet):
+	# ask user to tag tweet as either Good or Noise
+	# use g for good, and n for noise
+	x = str(raw_input(tweet))
+	return x
 ################################
+askuser("hello!")
+"""
+tweets = ([(tweet,'good')
+			for tweet in tweetbucket("good.json")]
+			# the user will create a good.json file for good tweets
+			+
+		  [(tweet,'noise')
+		  	for tweet in tweetbucket("noise.json")
+		  	# the user will create a noise.json file for noisey tweets
+import random
+random.shuffle(tweets)
+featuresets??? what should this contain?
+"""
 
 j = open('geotagged_tweets_from_haiti.json')
 
 jsonobjects = [i for i in j]
 
 l = [json.loads(j) for j in jsonobjects]
+from pprint import pprint
 
-x = [i['text'] for i in l]
+x = [(i['id'],i['from_user'],i['text']) for i in l]
+
+"""Are the ids unique enough to be Database ids???"""
+ids = [i['id'] for i in l]
+#pprint(sorted(ids))
 
 
 #tagged_list = [nltk.pos_tag(nltk.word_tokenize(j)) for j in x ]
