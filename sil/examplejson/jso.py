@@ -159,7 +159,7 @@ def askuser(tweet):
 	x = str(raw_input(tweet))
 	return x
 ################################
-askuser("hello!")
+#askuser("hello!")
 """
 tweets = ([(tweet,'good')
 			for tweet in tweetbucket("good.json")]
@@ -173,17 +173,27 @@ random.shuffle(tweets)
 featuresets??? what should this contain?
 """
 
-j = open('geotagged_tweets_from_haiti.json')
 
-jsonobjects = [i for i in j]
+json_extracts = [
+				(json.loads(i)['id'],
+				json.loads(i)['from_user'],
+				json.loads(i)['text']
+				)
+				for i in open('geotagged_tweets_from_haiti.json')
+				]
+				
+jsonized_file = open('extracted.json','w')
+for id,usr,text in json_extracts:
+	jsonize = {"id":id,"usr":usr,"text":text}
+	jsonized_file.write(json.dumps(jsonize)+'\n')
+jsonized_file.flush()
+jsonized_file.close()
 
-l = [json.loads(j) for j in jsonobjects]
-from pprint import pprint
 
-x = [(i['id'],i['from_user'],i['text']) for i in l]
+#x = [(i['id'],i['from_user'],i['text']) for i in l]
 
 """Are the ids unique enough to be Database ids???"""
-ids = [i['id'] for i in l]
+#ids = [i['id'] for i in l]
 #pprint(sorted(ids))
 
 
