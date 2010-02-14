@@ -189,9 +189,6 @@ for id,usr,text in json_extracts:
 jsonized_file.flush()
 jsonized_file.close()
 
-
-#x = [(i['id'],i['from_user'],i['text']) for i in l]
-
 """Are the ids unique enough to be Database ids???"""
 #ids = [i['id'] for i in l]
 #pprint(sorted(ids))
