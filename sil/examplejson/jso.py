@@ -199,22 +199,18 @@ text_strings = [json.loads(i)['text'] for i in open('extracted.json')]
 tagged_list = [nltk.pos_tag(nltk.word_tokenize(text)) 
 				for text in text_strings]
 
-read_text.flush()
+
 read_text.close()
+
 from pprint import pprint
-pprint(tagged_list[0])
+#pprint(tagged_list[0])
 
-y = []
-#for tweet in x:
-#	y = nltk.word_tokenize(tweet)
-#	y = [i for i in y if i != 'RT']
-
-term_extractor = []  	
-#predictive_tag = [] # keywords or more important terms in text
-#symbols = ['@','#']
-#predictive_tag = [list(set([word])) for word, tag in i if tag == 'NNP' and word not in symbols] 
-#for i in tagged_list:
-#	predictive_tag.append(
-#		list(set([word for word,tag in i if tag == 'NNP' and word not in symbols]))
-#		)
-                     
+#term_extractor = []  	
+predictive_tag = [] # keywords or more important terms in text
+symbols = ['@','#']
+predictive_tag = [] 
+for i in tagged_list:
+	predictive_tag.append(
+		list(set([word for word,tag in i if tag == 'NNP' and word not in symbols]))
+		)
+pprint(predictive_tag[0])
