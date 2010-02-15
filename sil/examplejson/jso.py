@@ -181,8 +181,12 @@ json_extracts = [
 				)
 				for i in open('geotagged_tweets_from_haiti.json')
 				]
-				
-jsonized_file = open('extracted.json','w')
+try:
+	jsonized_file = open('extracted.json','w')
+except:
+	os.remove('extracted.json')
+	jsonized_file = open('extracted.json','w')
+
 for id,usr,text in json_extracts:
 	jsonize = {"id":id,"usr":usr,"text":text}
 	jsonized_file.write(json.dumps(jsonize)+'\n')
@@ -190,11 +194,15 @@ jsonized_file.flush()
 jsonized_file.close()
 
 """Are the ids unique enough to be Database ids???"""
-#ids = [i['id'] for i in l]
-#pprint(sorted(ids))
+read_text = open('extracted.json','r')
+text_strings = [json.loads(i)['text'] for i in open('extracted.json')]
+tagged_list = [nltk.pos_tag(nltk.word_tokenize(text)) 
+				for text in text_strings]
 
-
-#tagged_list = [nltk.pos_tag(nltk.word_tokenize(j)) for j in x ]
+read_text.flush()
+read_text.close()
+from pprint import pprint
+pprint(tagged_list[0])
 
 y = []
 #for tweet in x:
