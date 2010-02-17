@@ -8,6 +8,8 @@ import HTMLParser
 import sqlite3
 import json
 import urllib2
+import os
+from pprint import pprint
 
 """
 ####################
@@ -202,7 +204,7 @@ tagged_list = [nltk.pos_tag(nltk.word_tokenize(text))
 
 read_text.close()
 
-from pprint import pprint
+# Test
 #pprint(tagged_list[0])
 
 #term_extractor = []  	
@@ -213,4 +215,5 @@ for i in tagged_list:
 	predictive_tag.append(
 		list(set([word for word,tag in i if tag == 'NNP' and word not in symbols]))
 		)
-pprint(predictive_tag[0])
+#Test
+#pprint(predictive_tag[0])
