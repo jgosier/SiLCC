@@ -159,6 +159,7 @@ def connectToDatabase(host,user,passwd,db):
     usage:
             >>> conn = <someObject>.connectToDatabase("localhost","j.gosier","morpheus","gregarius")
             >>> cursor = conn.cusor()
+    There's an assumption that your are using MySQL
     """
     conn = MySQLdb.connect(
                            host=host,

@@ -210,10 +210,12 @@ read_text.close()
 #term_extractor = []  	
 predictive_tag = [] # keywords or more important terms in text
 symbols = ['@','#']
-predictive_tag = [] 
+term_extracts = [] 
 for i in tagged_list:
-	predictive_tag.append(
+	term_extracts.append(
 		list(set([word for word,tag in i if tag == 'NNP' and word not in symbols]))
 		)
 #Test
 #pprint(predictive_tag[0])
+
+

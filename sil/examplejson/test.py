@@ -8,7 +8,8 @@ random.shuffle(tweets)
 
 allWords = nltk.FreqDist(word.lower()
 						for item in tweets
-						for word in item)
+						for word in item 
+						if word not in string.punctuation and word not in string.digits and word not in string.whitespace)
 						
 partitioner = len(allWords)
 wordFeatures = allWords.keys()[:partitioner/2] # figure should not be small i.e. 100
