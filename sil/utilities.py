@@ -6,6 +6,7 @@ Created on Jan 8, 2010
 # -*- coding: utf-8 -*-
 
 import feedparser
+import urllib
 import json
 from string import punctuation
 import nltk
@@ -18,6 +19,29 @@ class Stripper(HTMLParser.HTMLParser):
         self.fed.append(d)
     def get_fed_data(self):
         return "".join(self.fed)
+
+class Data():
+	def __init__(self,text):
+		self.text = text
+
+# using the call_uri function... SiLCC waits for link with a json resource
+# it reads of the JSON inside of the link... and populates text
+def call_uri(uri):
+
+	search_url = '%s'%uri
+	raw = urllib.urlopen(search_url)
+	print "Read off search URL..."
+	js = raw.readlines()
+	print "transferred all data to js"
+	js_object = json.loads(js[0])
+	print "loading json object complete"
+	tweets = []
+	for item in js_object['results']:
+		text = item['text']
+		thistweet = Tweet(text)
+		tweets.append(thistweet)
+	return tweets
+
 
 class Utilities:
     def __init__(self,folder):
