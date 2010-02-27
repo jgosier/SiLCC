@@ -12,7 +12,8 @@ class Tweet():
 		self.time = time
 
 def search_twitter():
-	search_url = 'http://search.twitter.com/search.json?q=Django'
+	keyword = raw_input("Query: \n")
+	search_url = 'http://search.twitter.com/search.json?q=%s'%keyword
 
 	raw = urllib.urlopen(search_url)
 	print "Read off search URL..."
@@ -28,10 +29,9 @@ def search_twitter():
 		time = item['created_at']		
 		thistweet = Tweet(user,text,graphic,time)
 		tweets.append(thistweet)
-	return tweets
+	for i in tweets:
+	    print i.text
+	    print i.time	
 
-x = search_twitter()
-for i in x:
-	print i.text
-	print i.graphic
-	print i.time
+
+search_twitter()
