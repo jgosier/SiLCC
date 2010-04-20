@@ -6,11 +6,11 @@ import simplejson
 
 from optparse import OptionParser # command-line option parser                                                                                                  
 
-from silcc.lib.tweettokenizer import TweetTokenizer
-from silcc.lib.tweetparser import TweetParser
+from silcc.lib.tweetparser import TweetTokenizer, TweetParser
 from silcc.lib.tweettagger import TweetTagger
 
-def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='apple', username=None, password=None, max=5):
+
+def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='apple', username=None, password=None, max=5, encoding='utf-8'):
     values = dict(track=track)
     data = urllib.urlencode(values)
     request = urllib2.Request(feed, data)
@@ -30,7 +30,7 @@ def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='appl
             print 'JSON load failed on line===>%s ' % line
             continue
         text = tweet.get('text')
-        print text
+        print text.encode(encoding, 'replace')
         tokens = tt.tokenize(text)
         parsed = tp.parse(text, debug=False)
         
@@ -60,6 +60,12 @@ if __name__ == '__main__':
                       help='The search term/keyword to track e.g. earthquake',
                       type='str',
                       default='earthquake')
+    parser.add_option('--encoding',
+                      help='Character encoding to use when printing, default is utf-8',
+                      type='str',
+                      default='utf-8')
     (options, args) = parser.parse_args()
 
-    connect(username=options.username, password=options.password, max=options.max, track=options.track)
+    connect(username=options.username, password=options.password, max=options.max, 
+            track=options.track,
+            encoding=options.encoding)
