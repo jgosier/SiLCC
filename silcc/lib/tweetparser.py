@@ -1,7 +1,7 @@
 import re
 import sys
 
-
+from silcc.lib.tweettokenizer import TweetTokenizer
 
 class ParserException(Exception):
     '''

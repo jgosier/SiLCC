@@ -6,7 +6,8 @@ import simplejson
 
 from optparse import OptionParser # command-line option parser                                                                                                  
 
-from silcc.lib.tweetparser import TweetTokenizer, TweetParser
+from silcc.lib.tweettokenizer import TweetTokenizer
+from silcc.lib.tweetparser import TweetParser
 from silcc.lib.tweettagger import TweetTagger
 
 def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='apple', username=None, password=None, max=5):
