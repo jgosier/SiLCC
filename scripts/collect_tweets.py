@@ -38,7 +38,7 @@ def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='appl
         print tokens
         print parsed
         print tags
-        if count == max:
+        if count >= max:
             break
 
 

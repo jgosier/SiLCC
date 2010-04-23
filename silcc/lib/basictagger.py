@@ -1,5 +1,6 @@
 import logging
 import sys
+import csv
 
 import nltk
 from sqlalchemy import and_, desc, func, or_, select
@@ -20,28 +21,10 @@ log = logging.getLogger(__name__)
 pos_include = ('NN', 'NNP', 'NNS')
 
 # These should never be tags...
-stop_words = ('a', 'an','and','at', 'are','as',
-              'be', 'by','but',
-              'can',
-              'do', 'does', 'done','did',"didn't",'didnt', 'dont',
-              'for','from',
-              'go', 'get',
-              'he', 'his','how','had','has',"he's", 'her', 'hers','have', 'havnt','hes',
-              'in', "i'm", "i'll",'is', 'it', 'im',"iv'e",'if','its',
-              'id', 'im','ill','ive','itll',
-              'my','may',
-              'no', 
-              'of','on','our','or',
-              'please',
-              'rt',
-              'so', 'she','should', 'shouldnt',
-              'to','the','then', 'there','than', 'that','this',
-              'us','up',
-              'we','who','with','was','will','when','why','way','were','want',
-              'whats',
-              "you'll", 'you', 'youll',
-              '-', '--', '---'
-              )
+reader = csv.reader(open('data/stopwords.csv'))
+stop_words = []
+for line in reader:
+    stop_words += line
 
 def capitilization_type(text):
     '''
