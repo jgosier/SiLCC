@@ -57,3 +57,38 @@ python scripts/load_place_names.py allCountries.txt
 
 $ paster serve prod.ini
 
+
+========
+Placing your SiLCC Instance DB under version controll.
+========
+You may want to place your database under version control so 
+that you can easily upgrade the schema, should it evolve over time.
+
+To do this you need to first create an
+empty database, and then place it under version control.
+
+1) First install sqlalchemy-migrate:
+
+$ easy_install sqlalchemy-migrate
+
+2) now place your database under version control with:
+
+$ python db_repository/manage.py version_control  mysql://silcc:silcc@localhost:3306/silcc
+
+This will create the migrate_version table in your database and set the
+initial version to 0.
+
+After that you may run any schema upgrade scripts including the
+first one which will create the necessary tables.
+
+Most data in the SiLLC distribution can be recreated using scripts and
+data dumps provided.
+
+3) To make upgrading your local instance easier its best to create a manage.py
+scripts as follows:
+
+$ migrate manage manage.py --repository=db_repository --url=mysql://silcc:silcc@localhost:3306/silcc
+
+Since the manage.py will be specific to your local instance it is not included in the SiLCC repo.
+
+
