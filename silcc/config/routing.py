@@ -19,10 +19,9 @@ def make_map(config):
 
     # CUSTOM ROUTES HERE
 
-    map.connect('/', controller='api', action='extract_tags')
-    map.connect('/api', controller='api', action='extract_tags')
-    map.connect('/index', controller='api', action='index')
-    map.connect('/place', controller='api', action='city')
+    map.connect('/', controller='api', action='demo')
+    map.connect('/api/tag', controller='api', action='extract_tags')
+    map.connect('/index', controller='api', action='demo')
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')

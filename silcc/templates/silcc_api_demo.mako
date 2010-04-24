@@ -19,8 +19,9 @@
            return;
         }
         var postdata='text='+encodeURIComponent(text);
+				postdata+='&key=${c.apikey}';
         $('tag_results').innerHTML='Analysing text...<div style="text-align: center; vertical-align:center"><img src="/media/ajax-loader.gif"></div>'
-				asyncLoadDiv('/api', postdata, $('tag_results'));
+				asyncLoadDiv('/api/tag', postdata, $('tag_results'));
     }
 
 </script>
