@@ -27,7 +27,8 @@ class ApiController(BaseController):
         apikey = request.params.get('key')
         language = request.params.get('language')
         channel = request.params.get('channel')
-        log.info('apikey=%s', apikey)
+        referrer = request.headers.get('REFERER', '/')
+        log.info('apikey=%s referrer=%s', apikey, referrer)
 
         if not apikey:
             # From Swift River API docs:
