@@ -9,6 +9,7 @@ from sqlalchemy import and_, desc, func, or_, select
 
 from silcc.lib.base import BaseController, render
 from silcc.lib.tweettagger import TweetTagger
+from silcc.lib.util import get_host
 from silcc.model import APIKey
 from silcc.model.meta import Session
 
@@ -28,7 +29,8 @@ class ApiController(BaseController):
         language = request.params.get('language')
         channel = request.params.get('channel')
         referrer = request.headers.get('REFERER', '/')
-        log.info('apikey=%s referrer=%s', apikey, referrer)
+        host = get_host(referrer)
+        log.info('apikey=%s referrer=%s host=%s', apikey, referrer, host)
 
         if not apikey:
             # From Swift River API docs:
@@ -40,9 +42,15 @@ class ApiController(BaseController):
         # Now check that the API Key is valid...
         key = Session.query(APIKey).filter_by(keystr=apikey).first()
         if not key:
+            log.info('No matching key was found in the db.')
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
 
+        if key.valid_domains != host:
+            log.info("A Key was found but the referring host is invalid.")
+            response.status = '401 Unauthorized'
+            return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
+            
         if text:
             log.info('Text to be tagged: %s', text)
             tags = TweetTagger.tag(text)
