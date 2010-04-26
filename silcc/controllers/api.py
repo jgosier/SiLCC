@@ -22,7 +22,7 @@ class ApiController(BaseController):
         c.apikey = config.get('demo_api_key')
         return render('/silcc_api_demo.mako')
         
-    def extract_tags(self):
+    def tag(self):
 
         text = request.params.get('text')
         apikey = request.params.get('key')
@@ -46,18 +46,17 @@ class ApiController(BaseController):
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
 
-        if key.valid_domains != host:
+        if key.valid_domains != host and key.valid_domains != '*':
             log.info("A Key was found but the referring host is invalid.")
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
             
-        if text:
-            log.info('Text to be tagged: %s', text)
-            tags = TweetTagger.tag(text)
-            log.info('Tags extracted: %s', str(tags))
-            return simplejson.dumps(tags)
-        else:
-            c.apikey = config.get('demo_api_key')
-            return render('/silcc_api_demo.mako')
+        if not text:
+            log.info('Missing text parameter.')
+            return "001 Missing Parameter: Required parameter is not supplied (text)."
 
+        log.info('Text to be tagged: %s', text)
+        tags = TweetTagger.tag(text)
+        log.info('Tags extracted: %s', str(tags))
+        return simplejson.dumps(tags)
 
