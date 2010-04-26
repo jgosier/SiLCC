@@ -27,14 +27,15 @@ def get_host(sburl):
 
 
 class CIList(list):
-
-
+    '''
+    Case Insensitive list
+    A simple derivation of standard list with the
+    in operator overridden to make comparisons
+    case insensitive.
+    '''
     def __contains__(self, key):
         for t in self:
             if key.lower() == t.lower():
                 return True
         return False
 
-
-
-        

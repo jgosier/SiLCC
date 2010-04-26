@@ -11,7 +11,7 @@ from sqlalchemy import and_, desc, func, or_, select
 from silcc.lib.base import BaseController, render
 from silcc.lib.tweettagger import TweetTagger
 from silcc.lib.util import get_host
-from silcc.model import APIKey
+from silcc.model import APIKey, APICall
 from silcc.model.meta import Session
 
 
@@ -38,20 +38,22 @@ class ApiController(BaseController):
             # 007 Access denied. Your API key is no longer valid.  Please contact the administrator.
             # 008 Access denied. You need an API key to perform that task.  Please contact the administrator.
             response.status = '401 Unauthorized'
-            return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
+            return "008 Access denied. You need an API key to perform that task. Please contact the administrator."
         
-        # Now check that the API Key is valid...
+        # Now load the key from the db if it exists...
         key = Session.query(APIKey).filter_by(keystr=apikey).first()
         if not key:
             log.info('No matching key was found in the db.')
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
 
+        # Check that the key is valid for the referrer host...
         if key.valid_domains != host and key.valid_domains != '*':
             log.info("A Key was found but the referring host is invalid.")
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
             
+        # The text parameter is required for the tag method
         if not text:
             log.info('Missing text parameter.')
             return "001 Missing Parameter: Required parameter is not supplied (text)."
@@ -59,8 +61,21 @@ class ApiController(BaseController):
         log.info('Text to be tagged: %s', text)
         tags = TweetTagger.tag(text)
         log.info('Tags extracted: %s', str(tags))
+
+        # Now update the call count on the key row...
         key.calls = key.calls + 1
         key.last_call = datetime.datetime.now()
+
+        # Log the api call
+        apicall = APICall()
+        apicall.parameters = text
+        apicall.result = simplejson.dumps(tags)
+        apicall.apikey_id = key.id
+        apicall.method = 'tag'
+        apicall.http_method = request.method
+        Session.add(apicall)
+
         Session.commit()
+
         return simplejson.dumps(tags)
 
