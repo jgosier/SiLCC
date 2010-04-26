@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 import simplejson
 
@@ -58,5 +59,8 @@ class ApiController(BaseController):
         log.info('Text to be tagged: %s', text)
         tags = TweetTagger.tag(text)
         log.info('Tags extracted: %s', str(tags))
+        key.calls = key.calls + 1
+        key.last_call = datetime.datetime.now()
+        Session.commit()
         return simplejson.dumps(tags)
 
