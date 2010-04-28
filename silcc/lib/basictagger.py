@@ -22,7 +22,7 @@ pos_include = ('NN', 'NNP', 'NNS')
 
 # These should never be tags...
 reader = csv.reader(open('data/stopwords.csv'))
-stop_words = []
+stop_words = CIList()
 for line in reader:
     stop_words += line
 
@@ -67,7 +67,7 @@ class BasicTagger(object):
             log.info('POS after lower casing:%s', str(pos))
 
         # Only return those tokens whose pos is in the include list
-        tags = [t[0] for t in pos if t[1] in pos_include and not t[0].lower() in stop_words]
+        tags = [t[0] for t in pos if t[1] in pos_include and not t[0] in stop_words]
 
         # We want to preserve the order of tags purely for esthetic value
         # hence we will not use set()
