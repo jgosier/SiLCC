@@ -76,6 +76,6 @@ class ApiController(BaseController):
         Session.add(apicall)
 
         Session.commit()
-
+        response.headers['Content-Type'] = 'application/json'
         return simplejson.dumps(tags)
 
