@@ -21,6 +21,6 @@ def init_model(engine):
     APICall.table = apicall_table
     orm.mapper(APICall, APICall.table)
     
-    places_table = sa.Table('places', meta.metadata, autoload=True, autoload_with=engine)
-    Place.table = places_table
-    orm.mapper(Place, Place.table)
+    #places_table = sa.Table('places', meta.metadata, autoload=True, autoload_with=engine)
+    #Place.table = places_table
+    #orm.mapper(Place, Place.table)
