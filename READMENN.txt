@@ -32,8 +32,7 @@ This will take you into an interactive download environment.
 The corpus you want to download is: maxent_treebank_pos_tagger
 After downloading it quit python.
 
-5) Create the database. The scripts/schema.sql file
-contains the table definitions. If using MySQL:
+5) Create the database. If using MySQL:
 
 $ mysql -u root -p
 
@@ -44,19 +43,14 @@ Once in the mysql environment:
 
 Make sure the .ini file contains a DB URI to the above database.
 
-6) Now populate the place names database using the script provided:
+(Please see instructions below on using SQLAlchemy migrate
+scripts to generate the db schema)
 
-First download the free place names data from:
-http://download.geonames.org/export/dump/allCountries.zip
+6) To start the server:
 
-Unzip the file, then: 
+$ paster serve --daemon prod.ini 
 
-python scripts/load_place_names.py allCountries.txt
-
-7) To start the server:
-
-$ paster serve prod.ini
-
+Look for any errors in paster.log
 
 ========
 Placing your SiLCC Instance DB under version controll.
@@ -91,4 +85,9 @@ $ migrate manage manage.py --repository=db_repository --url=mysql://silcc:silcc@
 
 Since the manage.py will be specific to your local instance it is not included in the SiLCC repo.
 
+4) Now run a db update to generate the initial schema:
 
+$ python manage.py update
+
+5) The Web Service API needs to have one or more valid keys in the apikey table.
+For testing purposes add a key with a valid_domains value of '*' (valid from all domains)

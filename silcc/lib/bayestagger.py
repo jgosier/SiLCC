@@ -111,20 +111,15 @@ class BayesTagger(object):
 
     @classmethod
     def tag(cls, text):
-        #parsing = TweetParser.parse(text, debug=False)
-        #text = parsing.get('text')
-        #context = text.split()
 
         text = text.replace("'", "")
         cap_type = capitalization_type(text)
-
         bt = BasicTokenizer()
-        context = bt.tokenize(text)
 
         if cap_type == 'ALLCAPS':
-            # If the headline is in AllCAPS then the POS tagger
-            # produces too many proper nouns, hence we de-capitilize text first
             context = bt.tokenize(text.lower())
+        else:
+            context = bt.tokenize(text)
 
         tags = []
         for i in range(len(context)):

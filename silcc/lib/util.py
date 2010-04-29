@@ -1,4 +1,25 @@
 import re
+import csv
+
+class CIList(list):
+    '''
+    Case Insensitive list
+    A simple derivation of standard list with the
+    in operator overridden to make comparisons
+    case insensitive.
+    '''
+    def __contains__(self, key):
+        for t in self:
+            if key.lower() == t.lower():
+                return True
+        return False
+
+
+# These should never be tags...
+reader = csv.reader(open('data/stopwords.csv'))
+stop_words = CIList()
+for line in reader:
+    stop_words += line
 
 url_re = re.compile('''
     ^             # we should strip the url first of leading whitespace
@@ -26,18 +47,6 @@ def get_host(sburl):
     return sbhost
 
 
-class CIList(list):
-    '''
-    Case Insensitive list
-    A simple derivation of standard list with the
-    in operator overridden to make comparisons
-    case insensitive.
-    '''
-    def __contains__(self, key):
-        for t in self:
-            if key.lower() == t.lower():
-                return True
-        return False
 
 def capitalization_type(text):
     '''
@@ -54,3 +63,20 @@ def capitalization_type(text):
         return 'ALLCAPS'
     else:
         return 'NORMAL'
+
+def decapitalize_stopwords(text):
+    '''
+    Converts all stopwords (except first word)
+    to leading lowercase word. This is useful for 
+    text where all words have been capitalized as the
+    POS tagger does not work well on such text.
+    '''
+    tokens = text.split()
+    retval = [tokens[0]]
+    for t in tokens[1:]:
+        if t in stop_words:
+            retval.append(t.lower())
+        else:
+            retval.append(t)
+    return ' '.join(retval)
+        

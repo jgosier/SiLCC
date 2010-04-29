@@ -8,10 +8,11 @@ class TweetTagger(object):
 
     @classmethod
     def tag(cls, tweet, texttagger=BasicTagger,debug=False):
+
         parsed_tweet = TweetParser.parse(tweet, debug=debug)
         text = parsed_tweet.get('text')
-        print text
         tags = texttagger.tag(text)
+
         # Now add the hashtags from the parsing...
         hashtags = parsed_tweet.get('hashtags', [])
         # Strip off the '#'...
