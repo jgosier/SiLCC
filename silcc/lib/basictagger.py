@@ -7,7 +7,7 @@ from sqlalchemy import and_, desc, func, or_, select
 
 from silcc.model import Place
 from silcc.model.meta import Session
-from silcc.lib.util import CIList
+from silcc.lib.util import CIList, capitalization_type
 from silcc.lib.basictokenizer import BasicTokenizer
 
 log = logging.getLogger(__name__)
@@ -25,23 +25,6 @@ reader = csv.reader(open('data/stopwords.csv'))
 stop_words = CIList()
 for line in reader:
     stop_words += line
-
-def capitilization_type(text):
-    '''
-    Determines the type of capitilzation used:
-    NORMAL - Mixture of upper and lower
-    ALLCAPS - All words capitilized
-    LOWER - All words lower cased
-    '''
-    tokens = text.split()
-    capitilized = [t for t in tokens if t[0].upper() == t[0]]
-    log.info('Capitilized tokens: %s', str(capitilized))
-    if len(capitilized) == 0:
-        return 'LOWER'
-    elif len(capitilized) == len(tokens):
-        return 'ALLCAPS'
-    else:
-        return 'NORMAL'
                  
 class BasicTagger(object):
 
@@ -52,7 +35,7 @@ class BasicTagger(object):
             return []
 
         text = text.replace("'", "")
-        cap_type = capitilization_type(text)
+        cap_type = capitalization_type(text)
 
         bt = BasicTokenizer()
         tokens = bt.tokenize(text)

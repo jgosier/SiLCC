@@ -79,24 +79,31 @@ class TweetParser(object):
         Flushes tag group to the text attribute
         when the next token is not also a hashtag.
         '''
-        text = D.get('text', [])
-        if not text:
-            D['text'] = D['taggroup'][:] 
+        hashtags = D.get('hashtags', [])
+        if not hashtags:
+            D['hashtags'] = D['taggroup'][:]
         else:
-            text += D['taggroup'][:]
+            hashtags += D['taggroup'][:]
         del D['taggroup']
+
 
     def flush_taggroup_append_name(current_state, D, token, next_state):
         '''
-        Flushes tag group to the text attribute
-        and appends the @name to the text.
+        Flushes tag group to the hashtags attribute
+        and appends the @name token to the names.
         '''
-        text = D.get('text', [])
-        if not text:
-            D['text'] = D['taggroup'][:] + [token[1]]
+        hashtags = D.get('hashtags', [])
+        names = D.get('names', [])
+        # First append the name to the names
+        if not names:
+            D['names'] = [token[1]]
         else:
-            text += D['taggroup'][:]
-            text.append(token[1])
+            names.append(token[1]) 
+        # Now flush the taggroup to the hashtags...
+        if not hashtags:
+            D['hashtags'] = D['taggroup'][:]
+        else:
+            hashtags += D['taggroup'][:]
         del D['taggroup']
 
 
@@ -165,7 +172,8 @@ class TweetParser(object):
         ( 'TEXT',        'RT',           None,                'TEXT'),
         ( 'TEXT',        'EMOTICON',     None,                'TEXT'),
         ( 'TEXT',        '#TAG',         append_taggroup,     'TAGGROUP'),
-        ( 'TAGGROUP',    'COLON',        flush_taggroup,      'TEXT'),
+        #( 'TAGGROUP',    'COLON',        flush_taggroup,      'TEXT'),
+        ( 'TAGGROUP',    'COLON',        None,                'TAGGROUP'),
         ( 'TAGGROUP',    'WORD',         flush_taggroup_append_word,  'TEXT'),
         ( 'TAGGROUP',    '@NAME',        flush_taggroup_append_name,  'TEXT'),  
         ( 'TAGGROUP',    '#TAG',         append_taggroup,     'TAGGROUP' ),

@@ -39,3 +39,18 @@ class CIList(list):
                 return True
         return False
 
+def capitalization_type(text):
+    '''
+    Determines the type of capitilzation used:
+    NORMAL - Mixture of upper and lower
+    ALLCAPS - All words capitilized
+    LOWER - All words lower cased
+    '''
+    tokens = text.split()
+    capitilized = [t for t in tokens if t[0].upper() == t[0]]
+    if len(capitilized) == 0:
+        return 'LOWER'
+    elif len(capitilized) == len(tokens):
+        return 'ALLCAPS'
+    else:
+        return 'NORMAL'
