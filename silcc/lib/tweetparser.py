@@ -159,6 +159,7 @@ class TweetParser(object):
         ( 'TEXT',        '@NAME',        append_name,         'TEXT'),
         ( 'TEXT',        'URL',          append_url,          'TEXT'),
         ( 'TEXT',        'COLON',        None,                'TEXT'),
+        ( 'TEXT',        '&QUOT',        None,                'TEXT'),
         ( 'TEXT',        'COMMA',        None,                'TEXT'),  
         ( 'TEXT',        'DOLLARS',      append_word,         'TEXT'),
         ( 'TEXT',        'QMARK',        None,                'TEXT'),
