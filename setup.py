@@ -9,9 +9,9 @@ setup(
     name='silcc',
     version='0.1',
     description='',
-    author='',
-    author_email='',
-    url='',
+    author='Neville Newey',
+    author_email='nn@theneweys.org',
+    url='http://silcc.nrny.net',
     install_requires=[
         "Pylons>=0.9.7",
         "SQLAlchemy>=0.5",
