@@ -1,3 +1,4 @@
+"""Provides the BayesTagger class"""
 import sys
 import csv
 import math
@@ -5,7 +6,6 @@ import pickle
 
 import nltk
 
-from silcc.lib.tweetparser import TweetParser
 from silcc.lib.basictokenizer import BasicTokenizer
 from silcc.lib.util import CIList, capitalization_type
 
@@ -26,13 +26,13 @@ print 'Got Unpickled data...'
 
 
 def featurize(wordpos, context):
-    '''
+    """
     Given a word position within a line of text (the context)
     we return of list of features of the word within the context.
     These features could be the role the word itself
     plays in the context or it could be a feature
     of the context itself, independant of the word.
-    '''
+    """
     features = []
     word = context[wordpos]
     pos = nltk.pos_tag(context)
@@ -89,12 +89,14 @@ def featurize(wordpos, context):
 
 
 def apply_multinomial_NB(C, V, prior, condprob, d):
+    """Returns most likely class"""
     W = d['tokens']
     score = {}
     for c in C:
         score[c] = math.log(prior[c])
         for t in W:
-            score[c] += math.log(condprob.get((t, c), 0.4))     # if the word has never been seen use 0.4?
+            # if the word has never been seen use 0.4?
+            score[c] += math.log(condprob.get((t, c), 0.4))     
     max_score = score['ham']
     max_cat = 'ham'
     for k, v in score.iteritems():
@@ -108,9 +110,15 @@ def apply_multinomial_NB(C, V, prior, condprob, d):
     return max_cat, score
 
 class BayesTagger(object):
+    """
+    This class implements a simple tagger that uses
+    pre-trained weights to determine most likely
+    class for each word in the text.
+    """
 
     @classmethod
     def tag(cls, text):
+        """Class method that returns tags given some text"""
 
         text = text.replace("'", "")
         cap_type = capitalization_type(text)
@@ -124,7 +132,10 @@ class BayesTagger(object):
         tags = []
         for i in range(len(context)):
             features = featurize(i, context)
-            d = dict(word=context[i], context=text, features=features, tokens=features, tags=tags)
+            d = dict(
+                word=context[i], 
+                context=text, 
+                features=features, tokens=features, tags=tags)
             m, s = apply_multinomial_NB(C, V, prior, condprob, d)
             if m == 'ham':
                 tags.append(context[i])
