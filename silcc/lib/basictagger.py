@@ -1,12 +1,10 @@
+"""Provides the BasicTagger class which tags English language text"""
 import logging
 import sys
 import csv
 
 import nltk
-from sqlalchemy import and_, desc, func, or_, select
 
-from silcc.model import Place
-from silcc.model.meta import Session
 from silcc.lib.util import CIList, capitalization_type
 from silcc.lib.basictokenizer import BasicTokenizer
 
@@ -27,10 +25,11 @@ for line in reader:
     stop_words += line
                  
 class BasicTagger(object):
+    """BasicTagger class for tagging English text"""
 
     @classmethod
     def tag(cls, text):
-
+        """Class method that returns tags given some text"""
         if not text:
             return []
 
@@ -50,7 +49,10 @@ class BasicTagger(object):
             log.info('POS after lower casing:%s', str(pos))
 
         # Only return those tokens whose pos is in the include list
-        tags = [t[0] for t in pos if t[1] in pos_include and not t[0] in stop_words]
+        tags = [t[0] for t in pos if t[1] in pos_include]
+
+        # Now exclude stopwords...
+        tags = [t for t in tags if not t in stop_words]
 
         # We want to preserve the order of tags purely for esthetic value
         # hence we will not use set()
@@ -58,8 +60,10 @@ class BasicTagger(object):
 
         tags_ = CIList()
         for t in tags:
-            if t in tags_: continue
-            if len(t) < 2: continue
+            if t in tags_: 
+                continue
+            if len(t) < 2: 
+                continue
             tags_.append(t)
 
         return tags_
