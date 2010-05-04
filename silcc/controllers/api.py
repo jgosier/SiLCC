@@ -53,6 +53,12 @@ class ApiController(BaseController):
             response.status = '401 Unauthorized'
             return "008 Access denied. You need an API key to perform that task.  Please contact the administrator."
             
+        # Now check the number of calls in the last minute...
+        query = select([func.count(APICall.table.c.id)])
+        query = query.where("called_at > now() - interval 1 minute") 
+        results = Session.execute(query).fetchone()
+        log.info('number of previous calls: %s', str(results))
+
         # The text parameter is required for the tag method
         if not text:
             log.info('Missing text parameter.')
