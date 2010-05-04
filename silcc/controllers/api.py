@@ -79,6 +79,7 @@ class ApiController(BaseController):
         apicall.apikey_id = key.id
         apicall.method = 'tag'
         apicall.http_method = request.method
+        apicall.called_from = request.environ.get("X_FORWARDED_FOR", request.environ["REMOTE_ADDR"]) 
         Session.add(apicall)
 
         Session.commit()
