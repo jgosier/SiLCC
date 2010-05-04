@@ -1,3 +1,4 @@
+"""Provides a class that will parse and tag text from a single tweet""" 
 import sys
 
 from silcc.lib.tweetparser import TweetParser
@@ -5,9 +6,16 @@ from silcc.lib.basictagger import BasicTagger
 from silcc.lib.bayestagger import BayesTagger
 
 class TweetTagger(object):
+    """
+    TweetTagger class provides a class with a static
+    method called "tag" which can be used to tag
+    a single tweet. It may also be used for news headlines
+    since these are generally a subset of tweets.
+    """
 
     @classmethod
-    def tag(cls, tweet, texttagger=BasicTagger,debug=False):
+    def tag(cls, tweet, texttagger=BasicTagger, debug=False):
+        """Class method to tag a tweet or other text."""
 
         parsed_tweet = TweetParser.parse(tweet, debug=debug)
         text = parsed_tweet.get('text')
@@ -18,7 +26,8 @@ class TweetTagger(object):
         # Strip off the '#'...
         hashtags = [h[1:] for h in hashtags]
         for tag in hashtags:
-            if tag in tags: continue
+            if tag in tags: 
+                continue
             tags.append(tag)
         return tags
 
