@@ -1,70 +1,82 @@
+"""Provides the TweetTokenizer class"""
 import re
 import sys
 
+class TokenizerException(Exception):
+    pass
+
+# Scanner callbacks...
+def word_(scanner, token):
+    return "WORD", token
+
+def at_name_(scanner, token):
+    return "@NAME", token
+
+def colon_(scanner, token):
+    return "COLON", token
+
+def url_(scanner, token):
+    return "URL", token
+
+def hash_tag_(scanner, token):
+    return "#TAG", token
+
+def amp_quote_(scanner, token):
+    return "&QUOT", token
+
+def comma_(scanner, token):
+    return "COMMA", token
+
+def question_mark_(scanner, token):
+    return "QMARK", token
+
+def emoticon_(scanner, token):
+    return "EMOTICON", token
+
+def exclamation_(scanner, token):
+    return "EXCLAIM", token
+
+def other_(scanner, token):
+    return "OTHER", token
+
+def left_paren_(scanner, token):
+    return "LEFT_PAREN", token
+
+def right_paren_(scanner, token):
+    return "RIGHT_PAREN", token
+
+def dots_(scanner, token):
+    return "DOTS", token
+
+def dashes_(scanner, token):
+    return "DASHES", token
+
+def percentage_(scanner, token):
+    return "PERCENTAGE", token
+
+def dollar_amount_(scanner, token):
+    return "DOLLARS", token
+
+def retweet_(scanner, token):
+    return "RT", token
+
+def half_word_(scanner, token):
+    '''
+    "Half" words are words at the end of tweets that 
+    have been truncated due to the 140 character limit.
+    These words usually end in 2 or more full stops.
+    '''
+    return "HALFWORD", token
+
+
 class TweetTokenizer(object):
+    """
+    TweetTokenizer class provides one 
+    class method which tokenizes
+    a tweet into suitable format for
+    the TweetParser (lexical analysis)
+    """
 
-    # Scanner callbacks...
-    def word_(scanner, token):
-        return "WORD", token
-
-    def at_name_(scanner, token):
-        return "@NAME", token
-
-    def colon_(scanner, token):
-        return "COLON", token
-
-    def url_(scanner, token):
-        return "URL", token
-
-    def hash_tag_(scanner, token):
-        return "#TAG", token
-
-    def amp_quote_(scanner, token):
-        return "&QUOT", token
-
-    def comma_(scanner, token):
-        return "COMMA", token
-
-    def question_mark_(scanner, token):
-        return "QMARK", token
-
-    def emoticon_(scanner, token):
-        return "EMOTICON", token
-
-    def exclamation_(scanner, token):
-        return "EXCLAIM", token
-
-    def other_(scanner, token):
-        return "OTHER", token
-
-    def left_paren_(scanner, token):
-        return "LEFT_PAREN", token
-
-    def right_paren_(scanner, token):
-        return "RIGHT_PAREN", token
-
-    def dots_(scanner, token):
-        return "DOTS", token
-
-    def dashes_(scanner, token):
-        return "DASHES", token
-
-    def percentage_(scanner, token):
-        return "PERCENTAGE", token
-
-    def dollar_amount_(scanner, token):
-        return "DOLLARS", token
-
-    def retweet_(scanner, token):
-        return "RT", token
-
-    def half_word_(scanner, token):
-        '''
-        "Half" words are words at the end of tweets that 
-        have been truncated due to the 140 character limit.
-        These words usually end in 2 or more full stops.
-        '''
-        return "HALFWORD", token
 
     scanner = re.Scanner([
         ("&amp;", other_),

@@ -1,3 +1,4 @@
+"""Miscellaneous functions and classes"""
 import re
 import csv
 
@@ -39,6 +40,7 @@ url_re = re.compile('''
 ''', re.VERBOSE | re.IGNORECASE)
 
 def get_host(sburl):
+    """returns the host name from a url"""
     s = url_re.search(sburl)
     if s:
         sbhost = s.group(1)
