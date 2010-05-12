@@ -48,7 +48,7 @@
 			      #mypara
 			      .rounded
 			    */
-			    curvyCorners(settings, "#myBox1, #myBox2, #myBox3, #myBox4, #myBox5");
+			    curvyCorners(settings, "#myBox1, #myBox2, #myBox3, #myBox4");
 			  }
 
 			</script>
@@ -56,13 +56,11 @@
 		<div id="top">
 			<p>
 				<ul>
-					<li class="version" >v0.0 Rumba</li>
-					<li class="link" ><a href="http://swift.ushahidi.com" title="overview" >Overview</a></li>
-					<li class="link" ><a href="http://swift.ushahidi.com/rc/" title="latest release candidate">Demo</a></li>
-					<li class="link" ><a href="https://spreadsheets.google.com/a/ushahidi.com/viewform?hl=en&formkey=dG5pOWdWMG5BeXluWms1MHFHbV9HN1E6MA" title="download" >Get Swift</a></li>
+					<li class="version" >v0.1 Apala</li>
+					<li class="link" ><a href="http://swift.ushahidi.com" title="overview" >About SwiftRiver</a></li>
+					<li class="link" ><a href="https://spreadsheets.google.com/a/ushahidi.com/viewform?hl=en&formkey=dHB2X3ZZSUZYTVJ0RnlFbFg2SElzQ3c6MA" title="download" >Get Swift</a></li>
 					<li class="link" ><a href="http://swift.ushahidi.com/doc/" title="notes on use, features and api" >Documentation</a></li>
-					<li class="link" ><a href="http://github.com/ushahidi/Swiftriver" title="developers" >Developers</a></li>
-					<li class="link" ><a href="http://swift.ushahidi.com/doc/doku.php?id=press" title="press" >Press</a></li>
+					<li class="link" ><a href="http://github.com/appfrica/silcc/" title="developers" >Developers</a></li>
 					<li class="link" ><a href="http://swift.ushahidi.com/doc/doku.php?id=faq" title="frequently asked questions" >FAQ</a></li>
 					<li class="link" ><a href="http://swift.ushahidi.com/goodies/" title="goodies" >Goodies</a></li>
 				</ul>
@@ -90,38 +88,26 @@
 									<div class="column_holder" style="">
 										<div id="myBox1" >
 											<H3 class="pt17">Community</H3>
-											<p>If you aren't a software developer but you still want to join the discussion on the curation and validation of crowd sourced news, please connect with us on our <a href="http://groups.google.com/group/swiftriver">Google Group</a>, our public chat <a href="http://www.skype.com/go/joinpublicchat?skypename=j%2egosier&topic=Swift%20River%20Public&blob=fCcfQEJLCSTkdNTZb_N-1VUtFLMZ2WuCz2GtImXrKhwbSyUPnxeiIRKVwVjKIbnPDvgwmo-jdd-9LmLRVuL7NHFgx72WyehIWwwPgAEhNi1um9TsYckFFcqPctFtxhshooxnZ6MrUUVNj7gpAcOF-9ELLMG1_IEq5myJBMlyVSC07bZT-cf9k6tqLMC5Ar0DFQ">on Skype</a>, or on our <a href="http://www.facebook.com/pages/Swiftriver/362720609137">Facebook Page</a>.</p>
+											<p>Join the discussion on the curation and validation of real-time news. Connect with us on Twitter <strong><a href="http://twitter.com/swiftriver">@swiftriver</a></strong>, our <strong><a href="http://groups.google.com/group/swiftriver">Google Group</a></strong>, our <strong><a href="http://www.skype.com/go/joinpublicchat?skypename=j%2egosier&topic=Swift%20River%20Public&blob=fCcfQEJLCSTkdNTZb_N-1VUtFLMZ2WuCz2GtImXrKhwbSyUPnxeiIRKVwVjKIbnPDvgwmo-jdd-9LmLRVuL7NHFgx72WyehIWwwPgAEhNi1um9TsYckFFcqPctFtxhshooxnZ6MrUUVNj7gpAcOF-9ELLMG1_IEq5myJBMlyVSC07bZT-cf9k6tqLMC5Ar0DFQ">Skype Chat</a></strong>, or on <strong><a href="http://www.facebook.com/pages/Swiftriver/362720609137">Facebook</a></strong>.</p>
 										</div></div>						
 			                        <div class="column_holder" style="">
 										<div id="myBox2" >
 											<div id="developer"><H3 class="pt17">Developers</H3></div>
-											<P>Swift River is an open source project built on KohanaPHP, with modular components built with Ruby and Python. We invite anyone interested in working with us to join our developer community by following us on <a href="http://github.com/ushahidi/Swiftriver">Git Hub</a>.
+											<P>SiLCC is an open source project. We invite anyone interested in working with us to join our developer community by following us on <a href="http://github.com/appfria/silcc">Git Hub</a>.
 			                                </P>
 										</div>
 			                        </div>
 									<div class="column_holder" style="">
 										<div id="myBox3" >
 			                            	<H3 class="pt17">Swift River Research</H3>
-												A curated collection of most of the research that went into developing Swift River. <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Veracity_and_Validation_030582_8676078002899885">Veracity and Validation</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Authority_and_Trust_7665742095_30467821657657623">Authority and Trust</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Predictive_Tagging">Predictive Tagging</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Community_Curation">Community Curation</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Taxonomy_and_Picoformats">Taxonomy and Picoformats</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Visualization_Methods_11566399_23362584318965673">Visualization Methods</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Collected_Code">Collected Code</A>, <a href="https://docs.google.com/leaf?id=0B3tjM3UhUoCeOTNkZGIyNzYtM2M5MS00OGM3LTg0NTgtOTUzM2QyNTk1OGQ4&hl=en">System Design Documents</a>
+												A curated collection of most of the research that went into developing SwiftRiver. <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Veracity_and_Validation_030582_8676078002899885">Veracity and Validation</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Authority_and_Trust_7665742095_30467821657657623">Authority and Trust</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Predictive_Tagging">Predictive Tagging</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Community_Curation">Community Curation</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Taxonomy_and_Picoformats">Taxonomy and Picoformats</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Visualization_Methods_11566399_23362584318965673">Visualization Methods</A>, <A href="https://docs.google.com/View?docID=0AXtjM3UhUoCeZGZ0azVwYjdfMTBkZ2Q4OGtmMg&revision=_latest&hgd=1#Collected_Code">Collected Code</A>, <a href="https://docs.google.com/leaf?id=0B3tjM3UhUoCeOTNkZGIyNzYtM2M5MS00OGM3LTg0NTgtOTUzM2QyNTk1OGQ4&hl=en">System Design Documents</a>
 										</div>
 									</div>
 									<div class="column_holder" style="">
 										<div id="myBox4" >
-											<div id="extend"><H3 class="pt17">Extend Swift River</H3></div>
-											<P>Swiftriver is a highly extensible and modular software platform. There are two ways of extending Swiftriver: via the API or with plugins.  Visit the <a href="../../extend">Extend</a> page for details.
+											<div id="extend"><H3 class="pt17">Extend SwiftRiver</H3></div>
+											<P>SwiftRiver is a highly extensible and modular software platform. There are two ways of extending SwiftRiver: via the API or with plugins.  Visit the <a href="http://swift.ushahidi.com/extend">Extend</a> page for details.
 			                                </P>
-										</div>
-			                        </div>
-									<div class="column_holder" style="">
-										<div id="myBox5" >
-											<div id="events"><H3 class="pt17">Upcoming Events</H3></div>
-											<H3 class="pt12"><A href="extend/flighty/" title="quick, lightweight swift alternative" >CHIRP: Twitter Developer Conference</A><br />
-												April 14 - 25, San Francisco, Ca</H3>
-											<H3 class="pt12"><A href="extend/silcc/" title="natural language processing" >Media140: Real Time Web Conference</A><br />
-												April 23 - 24, Perugia, Italy</H3>
-											<H3 class="pt12"><A href="extend/sulsa/" title="location aware component" >TEDGlobal 2010</A><br />
-												July 12 - 16, Oxford, UK</H3>
-
 										</div>
 			                        </div>
 										<br />
@@ -150,18 +136,11 @@
 					<div class="big_wrapper">
 						<div class="wrapper">
 							<div class="footer">
-								<div>
-									<iframe id="photo" scrolling="no" >	
-										<p>Your browser does not support iframes.</p>
-									</iframe>	
-								</div>	
 								<div class="footer-column">
 			                	<H5>Here</H5>
 			                    <UL>
-			                        <li class="first"><A href="http://www.ushahidi.com/">HOME</A></li>
-			                        <li><A href="./media/About Ushahidi.html">ABOUT</A></li>
-			                        <li><A href="http://www.ushahidi.com/work">OUR WORK</A></li>
-			                        <li><A href="http://www.ushahidi.com/join">JOIN US</A></li>
+			                        <li class="first"><A href="http://swift.ushahidi.com/">HOME</A></li>
+			                        <li><A href="http://www.ushahidi.com/">USHAHIDI</A></li>
 			                        <li><A href="http://blog.ushahidi.com/">BLOG</A></li>
 			                        <li><A href="http://www.ushahidi.com/sitemap">SITEMAP</A></li>
 			                        <li><A href="http://www.ushahidi.com/contact">CONTACT</A></li>

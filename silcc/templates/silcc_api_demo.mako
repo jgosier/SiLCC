@@ -3,12 +3,19 @@
 
 
 <%def name="main()">
+	
+	<div class="left">
+					<H1>ABOUT SiLCC</H1>	
 
-					<DIV class="left">
+					<p>SiLCC is a cloud based service for parsing text and extracting relevant keywords. To use it, you must first apply for an API key. Input the API key into your application and then push content to our server. As we receive your content, we parse it, extract relevant 'tags', then send it back to your app. From there user interaction with those tags (editing or removal) helps to improve our algorithms.</p>
 
-						<H1>T8gging Demo</H1>
+					<p>SiLLC also features robust glossaries for Twitter pico-formats and SMS txtSpeak. It specializes in the semantic tagging of content that's 280 characters and less.</p>
+	</div>
+					
+<div class="left">
+						<H1>Tagging Demo</H1>
 ##						<DIV class="location">
-##							You are here: Swift / Extend / <a href="http://www.swift.ushahidi.com/extend/ideas/">Ideas</a>
+##							You are here: Swift / Extend / <a href="http://www.swift.ushahidi.com/extend/">Ideas</a>
 ##						</DIV>                
 <script type="text/JavaScript">
 
@@ -25,6 +32,7 @@
     }
 
 </script>
+</div>
 <div class="left">
 
 <div id="formbody">
