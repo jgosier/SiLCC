@@ -6,7 +6,7 @@
 
 					<DIV class="left">
 
-						<H1>Tagging Demo</H1>
+						<H1>T8gging Demo</H1>
 ##						<DIV class="location">
 ##							You are here: Swift / Extend / <a href="http://www.swift.ushahidi.com/extend/ideas/">Ideas</a>
 ##						</DIV>                
