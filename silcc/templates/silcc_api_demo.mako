@@ -75,6 +75,6 @@ Text should be URI encoded.
 							<BR>
 							<BR>
 						
-					</DIV>
+			
 
 </%def>
