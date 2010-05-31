@@ -21,7 +21,7 @@ class BasicTokenizer(object):
 
     scanner = re.Scanner([
         (r"\W+", None),
-        (r"\b\w+\b", word_),
+        (r"\b[\w0-9'-/]+\b", word_),
         ])
 
     @classmethod
@@ -38,7 +38,7 @@ class BasicTokenizer(object):
 
 if __name__ == '__main__':
     text = sys.argv[1]
-    ht = HeadlineTokenizer()
+    ht = BasicTokenizer()
     print text
     tokens = ht.tokenize(text)
     print tokens
