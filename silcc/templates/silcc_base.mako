@@ -93,7 +93,7 @@
 			                        <div class="column_holder" style="">
 										<div id="myBox2" >
 											<div id="developer"><H3 class="pt17">Developers</H3></div>
-											<P>SiLCC is an open source project. We invite anyone interested in working with us to join our developer community by following us on <a href="http://github.com/appfria/silcc">Git Hub</a>.
+											<P>SiLCC is an open source project. We invite anyone interested in working with us to join our developer community by following us on <a href="http://github.com/appfrica/silcc">Git Hub</a>.
 			                                </P>
 										</div>
 			                        </div>
