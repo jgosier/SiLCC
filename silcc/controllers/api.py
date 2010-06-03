@@ -12,7 +12,6 @@ from sqlalchemy import and_, desc, func, or_, select
 from silcc.lib.base import BaseController, render
 from silcc.lib.tweettagger import TweetTagger
 from silcc.lib.util import get_host
-from silcc.lib.decorators import throttle
 from silcc.model import APIKey, APICall, Example
 from silcc.model.meta import Session
 
