@@ -20,7 +20,7 @@ apikey_table = Table('apikey', metadata,
 )                                                                                                                    
 
 # New Columns
-calls_per_minute_col = Column('calls_per_minute', INTEGER, server_default='60')
+calls_per_minute_col = Column('calls_per_minute', mysql.MSInteger, server_default='60')
 
 def upgrade():
     sql = "alter table apikey add calls_per_minute integer default 60"
