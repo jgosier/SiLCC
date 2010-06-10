@@ -16,7 +16,14 @@ def test_singularizer():
     assert singularize('types') == 'type'
     assert singularize('pass') == 'pass'
     assert singularize('balls') == 'ball'
-    assert singularize('men')  == 'man'
+    assert singularize('scissors')  == 'scissors'
+    assert singularize('clothes')  == 'cloth'
+    assert singularize('theses')  == 'thesis'
+    assert singularize('indices')  == 'index'
+    assert singularize('knives')  == 'knife'
+    assert singularize('lives')  == 'life'
+    assert singularize('thieves')  == 'thief'
+    assert singularize('fungi')  == 'fungus' 
 
 def test_singularizer_abraxas_tags():
     """This is not a true test, it just
