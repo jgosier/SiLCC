@@ -7,6 +7,7 @@ import nltk
 
 from silcc.lib.util import CIList, capitalization_type
 from silcc.lib.basictokenizer import BasicTokenizer
+from silcc.lib.singularizer import singularize
 
 log = logging.getLogger(__name__)
 
@@ -53,7 +54,10 @@ class BasicTagger(object):
 
         # Now exclude stopwords...
         tags = [t for t in tags if not t in stop_words]
-
+        
+        # Call Singularize
+        tags = [singularize(t) for t in tags]
+    
         # We want to preserve the order of tags purely for esthetic value
         # hence we will not use set()
         # We will also preserve uppercased tags if they are the first occurence
