@@ -2,6 +2,7 @@ import re
 import sys
 
 rules = (
+    (r'series\b', 'series'),
     (r'women\b', 'woman'),
     (r'\bmen\b', 'man'),
     (r'sheep\b', 'sheep'),
@@ -15,7 +16,7 @@ rules = (
 
 compiled_rules = []
 for r in rules:
-    compiled_rule = (re.compile(r[0]), r[1])
+    compiled_rule = (re.compile(r[0], re.IGNORECASE), r[1])
     compiled_rules.append(compiled_rule)
 
 def singularize(t):
