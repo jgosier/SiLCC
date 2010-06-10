@@ -2,6 +2,8 @@ import re
 import sys
 
 rules = (
+    (r'women\b', 'woman'),
+    (r'\bmen\b', 'man'),
     (r'sheep\b', 'sheep'),
     (r'goose\b', 'geese'),
     (r'pass\b', 'pass'),
