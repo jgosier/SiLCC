@@ -4,12 +4,12 @@ import sys
 from nltk.stem.wordnet import WordNetLemmatizer
 
 lmtzr = WordNetLemmatizer()
-
 rules = (
+
     (r'movies\b', 'movie'),
     (r'series\b', 'series'),
     (r'women\b', 'woman'),
-    (r'\bmen\b', 'man'),
+   # (r'\bmen\b', 'man'),
     (r'sheep\b', 'sheep'),
     (r'goose\b', 'geese'),
     (r'pass\b', 'pass'),
