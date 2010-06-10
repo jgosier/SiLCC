@@ -2,6 +2,7 @@ import re
 import sys
 
 rules = (
+    (r'movies\b', 'movie'),
     (r'series\b', 'series'),
     (r'women\b', 'woman'),
     (r'\bmen\b', 'man'),
@@ -11,7 +12,7 @@ rules = (
     (r'radii\b', 'radius'),
     (r'(.*)ii\b', r'\1us'),
     (r'(.*)ies\b', r'\1y'),
-    (r'(.*)s\b', r'\1'),
+    (r'(.*?[^s])s\b', r'\1'),
 )
 
 compiled_rules = []

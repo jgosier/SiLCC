@@ -3,6 +3,8 @@ import csv
 from silcc.lib.singularizer import singularize
 
 def test_singularizer():
+    assert singularize('movies') == 'movie'
+    assert singularize('business') == 'business'
     assert singularize('series') == 'series'
     assert singularize('women') == 'woman'
     assert singularize('radii') == 'radius'
