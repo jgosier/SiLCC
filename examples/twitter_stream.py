@@ -18,14 +18,14 @@ def connect(feed="http://stream.twitter.com/1/statuses/filter.json", track='appl
     count = 0
     for line in iter(s.readline, None):
         count += 1
-        #print '%s of %s' % (count, max)
+        print '%s of %s' % (count, max)
         try:
             tweet = simplejson.loads(line)
         except:
             print 'JSON load failed on line===>%s ' % line
             continue
         text = tweet.get('text')
-      #  print text.encode(encoding, 'replace')
+        print text.encode(encoding, 'replace')
         tags = tag(text)
         print tags
         if count >= max:
