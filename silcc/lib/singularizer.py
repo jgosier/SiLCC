@@ -8,14 +8,15 @@ rules = (
 
     (r'movies\b', 'movie'),
     (r'series\b', 'series'),
-    (r'women\b', 'woman'),
-   # (r'\bmen\b', 'man'),
-    (r'sheep\b', 'sheep'),
-    (r'goose\b', 'geese'),
-    (r'pass\b', 'pass'),
+    # (r'women\b', 'woman'),
+    # (r'\bmen\b', 'man'),
+    # (r'sheep\b', 'sheep'),
+    # (r'goose\b', 'geese'),     // Should have been geese ==> goose 
+    # (r'pass\b', 'pass'),
     (r'radii\b', 'radius'),
     (r'(.*)ii\b', r'\1us'),
     (r'(.*)ies\b', r'\1y'),
+    (r'(.*)(ch)es', r'\1'),             #Should take care of words like beaches etc
     (r'(.*?[^s])s\b', r'\1'),
 )
 
