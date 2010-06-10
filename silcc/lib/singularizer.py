@@ -16,7 +16,7 @@ rules = (
     (r'radii\b', 'radius'),
     (r'(.*)ii\b', r'\1us'),
     (r'(.*)ies\b', r'\1y'),
-    #(r'(.*)(ch)es', r'\1'),             #Should take care of words like beaches etc
+    (r'(.*(ch|x|o|s))es', r'\1'),             #Should take care of words like beaches etc
     (r'(.*?[^s])s\b', r'\1'),
 )
 
