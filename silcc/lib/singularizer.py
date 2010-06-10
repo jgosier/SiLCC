@@ -1,6 +1,10 @@
 import re
 import sys
 
+from nltk.stem.wordnet import WordNetLemmatizer
+
+lmtzr = WordNetLemmatizer()
+
 rules = (
     (r'movies\b', 'movie'),
     (r'series\b', 'series'),
@@ -33,7 +37,9 @@ def singularize(t):
     for r in compiled_rules:
         if r[0].match(t):
             return r[0].sub(r[1], t)
-    return t
+    # If none of our own rules hit fall back to NLTK lemmatizer
+    return lmtzr.lemmatize(t)
+
 
 if __name__ == '__main__':
     text = sys.argv[1]
