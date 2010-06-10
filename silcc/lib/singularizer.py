@@ -6,8 +6,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 lmtzr = WordNetLemmatizer()
 rules = (
 
-    (r'movies\b', 'movie'),
-    (r'series\b', 'series'),
+    
     # (r'women\b', 'woman'),
     # (r'\bmen\b', 'man'),
     # (r'sheep\b', 'sheep'),
@@ -18,6 +17,19 @@ rules = (
     (r'(.*)ies\b', r'\1y'),
     (r'(.*(ch|x|o|s))es', r'\1'),             #Should take care of words like beaches etc
     (r'(.*?[^s])s\b', r'\1'),
+    
+    # Specific rules for words which can't be handeled by above generic rules or the lemmetizer 
+    (r'movies\b', 'movie'),
+    (r'series\b', 'series'),
+    (r'scissors\b', 'scissors'),
+    (r'clothes\b', 'cloth'),
+    (r'theses\b', 'thesis'),
+    (r'indices\b', 'index'),
+    (r'knives\b', 'knife'),
+    (r'lives\b', 'life'),
+    (r'thieves\b', 'thief'),
+    (r'fungi\b', 'fungus'),
+    
 )
 
 compiled_rules = []
