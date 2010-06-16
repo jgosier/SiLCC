@@ -23,12 +23,15 @@ class SentenceTokenizer(object):
     def lower_(scanner, token):
         return "LOWER", token
 
-    def capitilized_(scanner, token):
-        """Capitilized means the first letter is upper only"""
-        return "CAPITILIZED", token
+    def capitalized_(scanner, token):
+        """Capitalized means the first letter is upper only"""
+        return "CAPITALIZED", token
 
     def mixed_(scanner, token):
         return "MIXED", token
+
+    def mixed_capitalized_(scanner, token):
+        return "MIXED_CAPITALIZED", token
 
     def other_(scanner, token):
         return "OTHER", token
@@ -37,12 +40,21 @@ class SentenceTokenizer(object):
         """Any token that indicates end of sentence e.g. . and ? """
         return "TERMINATOR", token
 
+    def spaces_(scanner, token):
+        """Any token that indicates end of sentence e.g. . and ? """
+        return "SPACES", token
+
+
     scanner = re.Scanner([
-        #(r"\b[A-Z][A-Z]+\b", upper_),    
-        (r"\b[A-Z][a-z\-]+\b", capitilized_),
+        (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+\b", lower_),
-        (r"\b[\w]+\b", mixed_),
+        (r"\b[A-Z][A-Za-z\-]+\b", mixed_capitalized_),
+        (r"\b[A-Za-z]+\b", mixed_),
         (r"[\.\?]", terminator_),
+        # This rule is for tokens containing non letters or mixtures
+        # of non-letters and letters for which cap type makes no sense
+        # for example: $52k, R101, s26 etc 
+        (r"[^\s]+", other_),
         (r"\s+", None),
         ])
 
