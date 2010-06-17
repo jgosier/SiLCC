@@ -2,6 +2,8 @@
 import re
 import sys
 
+from silcc.lib.basictagger import stop_words
+
 class TokenizerException(Exception):
     pass
 
@@ -18,14 +20,35 @@ class SentenceTokenizer(object):
 
     # Scanner callbacks...
     def upper_(scanner, token):
-        return "UPPER", token
+        if token in stop_words:
+            return "UPPER_STOPWORD", token
+        else:
+            return "UPPER", token
 
     def lower_(scanner, token):
-        return "LOWER", token
+        if token in stop_words:
+            return "LOWER_STOPWORD", token
+        else:
+            return "LOWER", token
 
     def capitalized_(scanner, token):
         """Capitalized means the first letter is upper only"""
-        return "CAPITALIZED", token
+        if token in stop_words:
+            return "CAPITALIZED_STOPWORD", token
+        else:
+            return "CAPITALIZED", token
+
+    def first_capitalized_(scanner, token):
+        """For the first word in a report"""
+        return "FIRST_CAPITALIZED", token
+
+    def shout_(scanner, token):
+        """All chars are upper"""
+        return "SHOUT", token
+
+    def first_lower_(scanner, token):
+        """For the first word in a report"""
+        return "FIRST_LOWER", token
 
     def mixed_(scanner, token):
         return "MIXED", token
@@ -46,6 +69,9 @@ class SentenceTokenizer(object):
 
 
     scanner = re.Scanner([
+        (r"\b[A-Z][A-Z]+\b", shout_),    
+        (r"^[A-Z][a-z\-]+\b", first_capitalized_),
+        (r"^[a-z\-]+\b", first_lower_),
         (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+\b", lower_),
         (r"\b[A-Z][A-Za-z\-]+\b", mixed_capitalized_),
