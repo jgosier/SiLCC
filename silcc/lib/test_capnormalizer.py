@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from silcc.lib.capnormalizer import capitalization_type, CapType
 
 data = (
@@ -8,6 +9,7 @@ data = (
     ('What Is The Type', CapType.ALLCAPS),
     ('Adlevo Capital Wants To Invest $52 Million Into African Tech Businesses', CapType.ALLCAPS),
     ('SwiftRiver 101 at the iHub', CapType.REGULAR),
+    ('Alarena The Nigerian Matchmaker Is Now Your “Lovebase”', CapType.ALLCAPS)
 )
 
 def test_cap_type():
