@@ -36,7 +36,7 @@ def capitalization_type(text):
     weights = {
         'REGULAR':{'CAPITALIZED_STOPWORD': 0.1, 'LOWER_STOPWORD':0.5 },
         'ALLCAPS':{'CAPITALIZED_STOPWORD': 0.9, 'LOWER_STOPWORD':0.1 },
-        'LOWER': {'FIRST_LOWER': 0.9, 'LOWER_STOPWORD':0.5 },
+        'LOWER': {'FIRST_LOWER': 0.9, 'FIRST_LOWER_STOPWORD': 0.9, 'LOWER_STOPWORD':0.5},
         'SHOUT': {'SHOUT': 0.9, 'LOWER_STOPWORD': 0.3 }
     }
     scores = {}
