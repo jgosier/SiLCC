@@ -13,3 +13,4 @@ if __name__ == '__main__':
         for k, v in CapType.__dict__.iteritems():
             if isinstance(v, int) and type_ == v:
                 print k
+        print '----'

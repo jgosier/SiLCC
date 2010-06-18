@@ -37,7 +37,7 @@ def capitalization_type(text):
         'REGULAR':{'CAPITALIZED_STOPWORD': 0.1, 'LOWER_STOPWORD':0.8, 'CAPITALIZED': 0.3, 'SHOUT':0.4 },
         'ALLCAPS':{'CAPITALIZED_STOPWORD': 0.9, 'LOWER_STOPWORD':0.1 },
         'LOWER': {'FIRST_LOWER': 0.9, 'FIRST_LOWER_STOPWORD': 0.9, 'LOWER_STOPWORD':0.6, 'CAPITALIZED_STOPWORD': 0.05, 
-                  'LOWER':0.6, 'SHOUT':0.1  },
+                  'LOWER':0.6, 'SHOUT':0.1, 'CAPITALIZED': 0.1  },
         'SHOUT': {'SHOUT': 0.8, 'LOWER_STOPWORD': 0.1, 'LOWER': 0.01 }
     }
     scores = {}
