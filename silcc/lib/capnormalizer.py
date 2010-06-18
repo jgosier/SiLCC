@@ -34,10 +34,11 @@ def capitalization_type(text):
     """
     tokens, remainder = SentenceTokenizer.scanner.scan(text)
     weights = {
-        'REGULAR':{'CAPITALIZED_STOPWORD': 0.1, 'LOWER_STOPWORD':0.5 },
+        'REGULAR':{'CAPITALIZED_STOPWORD': 0.1, 'LOWER_STOPWORD':0.8, 'CAPITALIZED': 0.3, 'SHOUT':0.4 },
         'ALLCAPS':{'CAPITALIZED_STOPWORD': 0.9, 'LOWER_STOPWORD':0.1 },
-        'LOWER': {'FIRST_LOWER': 0.9, 'FIRST_LOWER_STOPWORD': 0.9, 'LOWER_STOPWORD':0.5},
-        'SHOUT': {'SHOUT': 0.9, 'LOWER_STOPWORD': 0.3, 'LOWER': 0.1 }
+        'LOWER': {'FIRST_LOWER': 0.9, 'FIRST_LOWER_STOPWORD': 0.9, 'LOWER_STOPWORD':0.6, 'CAPITALIZED_STOPWORD': 0.05, 
+                  'LOWER':0.6, 'SHOUT':0.1  },
+        'SHOUT': {'SHOUT': 0.8, 'LOWER_STOPWORD': 0.1, 'LOWER': 0.01 }
     }
     scores = {}
     for cap_type, cap_type_weights in weights.iteritems():
