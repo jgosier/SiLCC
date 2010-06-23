@@ -2,7 +2,7 @@
 import re
 import sys
 
-from silcc.lib.basictagger import stop_words
+from silcc.lib.util import stop_words
 
 class TokenizerException(Exception):
     pass
