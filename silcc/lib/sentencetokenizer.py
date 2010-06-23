@@ -131,8 +131,8 @@ class SentenceTokenizer(object):
         (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+(ed|ly|ing|ize)\b", lower_stop_),
         (r"\b[a-z]+\b", lower_),
-        # getting the expression below to work in one go is an achievement 
         # big enough to ingore pylint's 80 char warning
+        # getting the expression below to work in one go is an achievement 
         (r"\b[A-Z][A-Za-z\-]+(((e|E)(d|D))|((l|L)(y|Y))|((i|I)(n|N)(g|G))|((i|I)|(z|Z)|(e|E)))\b", mixed_capitalized_stop_),
         (r"\b[A-Z][A-Za-z\-]+\b", mixed_capitalized_),
         (r"\b[A-Za-z]+(((e|E)(d|D))|((l|L)(y|Y))|((i|I)(n|N)(g|G))|((i|I)|(z|Z)|(e|E)))\b", mixed_stop_),
