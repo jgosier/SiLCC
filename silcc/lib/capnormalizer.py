@@ -1,6 +1,15 @@
 """Given short snippet of text converts that text into REGULAR capitilization"""
 import sys
+import math
+import pickle
+
 from silcc.lib.sentencetokenizer import SentenceTokenizer
+
+unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
+C = unpickle[0]
+V = unpickle[1]
+prior = unpickle[2]
+condprob = unpickle[3]
 
 class CapType(object):
     """Namespace for Capitilzation Type Constants"""
@@ -10,6 +19,21 @@ class CapType(object):
     SHOUT = 3
     LOWER = 4
     OTHER = 5
+
+def apply_multinomial_NB(C, V, prior, condprob, d):
+    W = d['tokens']
+    score = {}
+    for c in C:
+        score[c] = math.log(prior[c])
+        for t in W:
+            score[c] += math.log(condprob.get((t, c), 0.4))     # if the word has never been seen use 0.4?
+    max_score = score[C[0]]
+    max_cat = C[0]
+    for k, v in score.iteritems():
+        if v > max_score:
+            max_score = v
+            max_cat = k
+    return max_cat, max_score
 
 def capitalization_type(text):
     """Determine the capilitization type of the text
@@ -32,22 +56,10 @@ def capitalization_type(text):
     (This may also mean mixed type)
 
     """
-    tokens, remainder = SentenceTokenizer.scanner.scan(text)
-    weights = {
-        'REGULAR':{'CAPITALIZED_STOPWORD': 0.1, 'LOWER_STOPWORD':0.8, 'CAPITALIZED': 0.3, 'SHOUT':0.4 },
-        'ALLCAPS':{'CAPITALIZED_STOPWORD': 0.9, 'LOWER_STOPWORD':0.1 },
-        'LOWER': {'FIRST_LOWER': 0.9, 'FIRST_LOWER_STOPWORD': 0.9, 'LOWER_STOPWORD':0.6, 'CAPITALIZED_STOPWORD': 0.05, 
-                  'LOWER':0.6, 'SHOUT':0.1, 'CAPITALIZED': 0.1  },
-        'SHOUT': {'SHOUT': 0.8, 'LOWER_STOPWORD': 0.1, 'LOWER': 0.01 }
-    }
-    scores = {}
-    for cap_type, cap_type_weights in weights.iteritems():
-        score = 1
-        for token in tokens:
-            score *= cap_type_weights.get(token[0], 0.5)
-        scores[cap_type] = score
-    deco_scores = [(v, k) for k, v in scores.iteritems()]
-    deco_scores.sort(reverse=True)
+    d = dict(text=text)
+    d['tokens'] = [x[0] for x in SentenceTokenizer.tokenize(d['text'])]
+    result = apply_multinomial_NB(C, V, prior, condprob, d)
+    result = result[0]
     type_map = dict(
         REGULAR=CapType.REGULAR,
         GERMAN=CapType.GERMAN,
@@ -56,7 +68,7 @@ def capitalization_type(text):
         LOWER=CapType.LOWER,
         OTHER=CapType.OTHER
         )
-    return type_map[deco_scores[0][1]]
+    return type_map[result]
 
 if __name__ == '__main__':
     text = sys.argv[1]
