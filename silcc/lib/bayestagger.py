@@ -8,6 +8,7 @@ import nltk
 
 from silcc.lib.basictokenizer import BasicTokenizer
 from silcc.lib.util import CIList, capitalization_type
+from silcc.lib.singularizer import singularize
 
 # These should never be tags...
 reader = csv.reader(open('data/stopwords.csv'))
@@ -142,6 +143,9 @@ class BayesTagger(object):
 
         # Strip out stopwords...
         tags = [t for t in tags if t not in stop_words]
+
+        # Call Singularize
+        tags = [singularize(t) for t in tags]
 
         # We want to preserve the order of tags purely for esthetic value
         # hence we will not use set()
