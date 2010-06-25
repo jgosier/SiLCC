@@ -4,6 +4,7 @@ import sys
 from silcc.lib.tweetparser import TweetParser
 from silcc.lib.basictagger import BasicTagger
 from silcc.lib.bayestagger import BayesTagger
+from silcc.lib.combinedtagger import CombinedTagger
 
 class TweetTagger(object):
     """
@@ -37,6 +38,8 @@ if __name__ == '__main__':
     print "Basic:", tags
     tags = TweetTagger.tag(tweet, texttagger=BayesTagger)
     print "Bayes:", tags
+    tags = TweetTagger.tag(tweet, texttagger=CombinedTagger)
+    print "Combined:", tags
 
 
 
