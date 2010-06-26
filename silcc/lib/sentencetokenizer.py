@@ -2,7 +2,7 @@
 import re
 import sys
 
-from silcc.lib.basictagger import stop_words
+from silcc.lib.util import stop_words
 
 class TokenizerException(Exception):
     pass
@@ -119,6 +119,8 @@ class SentenceTokenizer(object):
         """Any token that indicates end of sentence e.g. . and ? """
         return "SPACES", token
 
+    #>>> pat.search('c. bby').groups()
+    #('bby',)
 
     scanner = re.Scanner([
         (r"\b[A-Z][A-Z]+(ED|LY|ING|IZE)\b", shout_stop_), 
@@ -127,6 +129,21 @@ class SentenceTokenizer(object):
         (r"^[A-Z][a-z\-]+\b", first_capitalized_),
         (r"^[a-z\-]+(ed|ly|ing|ize)\b", first_lower_stop_),
         (r"^[a-z\-]+\b", first_lower_),
+        # This next one should catch lower words following a fullstop
+        (r"(?<=\.\s)([a-z\-]+\b)", first_lower_),
+        # The next two captures first words after a stop
+        # with multiple spaces after the stop, since
+        # lookbehind has to have fixed number of chars
+        (r"(?<=\.\s\s)([a-z\-]+\b)", first_lower_),
+        (r"(?<=\.\s\s\s)([a-z\-]+\b)", first_lower_),
+        # The next 3 are the same as above but for capitalized words.
+        (r"(?<=\.\s)([A-Z][a-z\-]+\b)", first_capitalized_),
+        # The next two captures first words after a stop
+        # with multiple spaces after the stop, since
+        # lookbehind has to have fixed number of chars
+        (r"(?<=\.\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
+        (r"(?<=\.\s\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
+
         (r"\b[A-Z][a-z\-]+(ed|ly|ing|ize)\b", capitalized_stop_),
         (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+(ed|ly|ing|ize)\b", lower_stop_),

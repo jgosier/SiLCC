@@ -10,7 +10,8 @@ data = (
     ('Adlevo Capital Wants To Invest $52 Million Into African Tech Businesses', CapType.ALLCAPS),
     ('SwiftRiver 101 at the iHub', CapType.REGULAR),
     ('Alarena The Nigerian Matchmaker Is Now Your “Lovebase”', CapType.ALLCAPS),
-    ("SA exporting manpower to Iraq", CapType.REGULAR)
+    ("SA exporting manpower to Iraq", CapType.REGULAR),
+    ("Student Skydiver dies in Gravity related incident", CapType.REGULAR)
 )
 
 def test_cap_type():
