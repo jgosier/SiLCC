@@ -27,7 +27,7 @@ rules = (
     (r'(.*)ii\b', r'\1us'),
     (r'(.*)ies\b', r'\1y'),
     (r'(.*(ch|x|o|s))es', r'\1'),             #Should take care of words like beaches etc
-    (r'(.*?[^s])s\b', r'\1'),
+    # (r'(.*?[^s])s\b', r'\1'),		      #DNS, Mars, Stars etc fix
     
   
     
