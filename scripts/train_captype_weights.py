@@ -21,6 +21,7 @@ def get_training_examples(filename):
         text = line[1]
         examples.append(dict(category=category, text=text))
     return examples
+#OK
 
 def extract_vocabulary(all_entries):
     v = Set()

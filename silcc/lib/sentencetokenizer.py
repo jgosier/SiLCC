@@ -5,7 +5,7 @@ import sys
 from silcc.lib.util import stop_words
 
 class TokenizerException(Exception):
-    pass
+    pass 
 
 class SentenceTokenizer(object):
 
@@ -118,11 +118,17 @@ class SentenceTokenizer(object):
     def spaces_(scanner, token):
         """Any token that indicates end of sentence e.g. . and ? """
         return "SPACES", token
+    
+    def acronym_(scanner, token):
+        """Any token that indicates end of sentence e.g. . and ? """
+        return "ACRONYM", token
 
     #>>> pat.search('c. bby').groups()
     #('bby',)
 
     scanner = re.Scanner([
+        #Added acronym rule, will make identification accurate and normalization easier
+        (r"\b([A-Z]\.)+[A-Z]", acronym_), 
         (r"\b[A-Z][A-Z]+(ED|LY|ING|IZE)\b", shout_stop_), 
         (r"\b[A-Z][A-Z]+\b", shout_),    
         (r"^[A-Z][a-z\-]+(ed|ly|ing|ize)\b", first_capitalized_stop_),
@@ -143,18 +149,16 @@ class SentenceTokenizer(object):
         # lookbehind has to have fixed number of chars
         (r"(?<=\.\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
         (r"(?<=\.\s\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
-
         (r"\b[A-Z][a-z\-]+(ed|ly|ing|ize)\b", capitalized_stop_),
         (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+(ed|ly|ing|ize)\b", lower_stop_),
         (r"\b[a-z]+\b", lower_),
-        # big enough to ingore pylint's 80 char warning
-        # getting the expression below to work in one go is an achievement 
         (r"\b[A-Z][A-Za-z\-]+(((e|E)(d|D))|((l|L)(y|Y))|((i|I)(n|N)(g|G))|((i|I)|(z|Z)|(e|E)))\b", mixed_capitalized_stop_),
         (r"\b[A-Z][A-Za-z\-]+\b", mixed_capitalized_),
         (r"\b[A-Za-z]+(((e|E)(d|D))|((l|L)(y|Y))|((i|I)(n|N)(g|G))|((i|I)|(z|Z)|(e|E)))\b", mixed_stop_),
         (r"\b[A-Za-z]+\b", mixed_),
-        (r"[\.\?]", terminator_),
+        # Will handle . and -, else 'any-word' like this becomes 'any' + '-word' (by default a first cap)
+        (r"[(\.\?)|(\-\?)]", terminator_),
         # This rule is for tokens containing non letters or mixtures
         # of non-letters and letters for which cap type makes no sense
         # for example: $52k, R101, s26 etc 

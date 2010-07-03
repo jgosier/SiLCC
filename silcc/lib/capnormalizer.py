@@ -26,7 +26,7 @@ def apply_multinomial_NB(C, V, prior, condprob, d):
     for c in C:
         score[c] = math.log(prior[c])
         for t in W:
-            score[c] += math.log(condprob.get((t, c), 0.4))     # if the word has never been seen use 0.4?
+            score[c] += math.log(condprob.get((t, c), 0.4)) # if the word has never been seen use 0.4?
     max_score = score[C[0]]
     max_cat = C[0]
     for k, v in score.iteritems():
@@ -37,25 +37,23 @@ def apply_multinomial_NB(C, V, prior, condprob, d):
 
 def capitalization_type(text):
     """Determine the capilitization type of the text
-    
-    Types are:
+Types are:
 
-    - REGULAR: First letter of First word in sentences
-    is capitilized as well as first letter of proper nouns.
+- REGULAR: First letter of First word in sentences
+is capitilized as well as first letter of proper nouns.
 
-    - GERMAN: First letter of First word in sentences as
-    well as first letter of any noun.
+- GERMAN: First letter of First word in sentences as
+well as first letter of any noun.
 
-    - ALLCAPS: First letter of every word is capitilized.
-    
-    - SHOUT: Every letter is uppercase.
+- ALLCAPS: First letter of every word is capitilized.
+- SHOUT: Every letter is uppercase.
 
-    - LOWER: Every letter is lowercase.
+- LOWER: Every letter is lowercase.
 
-    - OTHER: None of the above definitions apply.
-    (This may also mean mixed type)
+- OTHER: None of the above definitions apply.
+(This may also mean mixed type)
 
-    """
+"""
     d = dict(text=text)
     d['tokens'] = [x[0] for x in SentenceTokenizer.tokenize(d['text'])]
     result = apply_multinomial_NB(C, V, prior, condprob, d)
@@ -76,3 +74,4 @@ if __name__ == '__main__':
     for k, v in CapType.__dict__.iteritems():
         if isinstance(v, int) and type_ == v:
             print k
+
