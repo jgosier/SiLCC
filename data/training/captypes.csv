@@ -1,13 +1,23 @@
-LOWER, "this is an example of lower"
-REGULAR, "This is an example of regular"
-ALLCAPS, "This Is An Example Of Allcaps"
-SHOUT, "THIS IS AN EXAMPLE Of SHOUT"
-ALLCAPS, "What Is The Type"
-ALLCAPS, "Adlevo Capital Wants To Invest $52 Million Into African Tech Businesses"
-REGULAR, "SwiftRiver 101 at the iHub"
-ALLCAPS, "Alarena The Nigerian Matchmaker Is Now Your “Lovebase”"
-REGULAR, "SA exporting manpower to Iraq"
-REGULAR, "Student Skydiver dies in Gravity related incident"
-REGULAR, "Durban get ready to write off  arrear traffic fines !     to mass excitement from defaulters"
-REGULAR, "Rand below  ZAR 6 / USD in early trade"
-REGULAR, "Desktop Linux: If we build it, will they come?"
+"LOWER"," ""this is an example of lower""",
+"REGULAR"," ""This is an example of regular""",
+"ALLCAPS"," ""This Is An Example Of Allcaps""",
+"SHOUT"," ""THIS IS AN EXAMPLE Of SHOUT""",
+"ALLCAPS"," ""What Is The Type""",
+"ALLCAPS"," ""Adlevo Capital Wants To Invest $52 Million Into African Tech Businesses""",
+"REGULAR"," ""SwiftRiver 101 at the iHub""",
+"ALLCAPS"," ""Alarena The Nigerian Matchmaker Is Now Your “Lovebase”""",
+"REGULAR"," ""SA exporting manpower to Iraq""",
+"REGULAR"," ""Student Skydiver dies in Gravity related incident""",
+"REGULAR"," ""Durban get ready to write off  arrear traffic fines !     to mass excitement from defaulters""",
+"REGULAR"," ""Rand below  ZAR 6 / USD in early trade""",
+"REGULAR"," ""Desktop Linux: If we build it"," will they come?"""
+"LOWER"," “more examples of what should be lower. This is lower”",
+"LOWER"," “training lower. even this is lower.”",
+"LOWER"," “i feel a little sorry for ghana, no specific reason though.”",
+"LOWER"," “after thisx will give only one more example of lower”",
+"LOWER"," “as mentioned above this is the last example of lower”",
+"REGULAR"," “Simple example of regular.”",
+"REGULAR"," “One more example of regular”",
+"REGULAR"," “This is also regular ok.”",
+"REGULAR"," “Adding examples. Is boring”",
+"REGULAR"," “Extremly boring. Actually hope it helps”",
