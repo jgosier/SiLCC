@@ -122,7 +122,7 @@ class SentenceTokenizer(object):
     def acronym_(scanner, token):
         """Any token that indicates end of sentence e.g. . and ? """
         return "ACRONYM", token
-
+    
     #>>> pat.search('c. bby').groups()
     #('bby',)
 
