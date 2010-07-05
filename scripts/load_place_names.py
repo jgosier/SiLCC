@@ -34,7 +34,7 @@ if __name__ == '__main__':
     parser.add_option('--ini',
                       help='INI file to use for application settings',
                       type='str',
-                      default='development.ini')
+                      default='development_dump.ini')
     parser.add_option('--filename',
                       help='File containing place names data.',
                       type='str',

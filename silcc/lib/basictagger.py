@@ -5,9 +5,11 @@ import csv
 
 import nltk
 
-from silcc.lib.util import CIList, capitalization_type
+from silcc.lib.util import CIList, stop_words # , capitalization_type
+from silcc.lib.capnormalizer import capitalization_type, CapType
 from silcc.lib.basictokenizer import BasicTokenizer
 from silcc.lib.singularizer import singularize
+
 
 log = logging.getLogger(__name__)
 
@@ -19,11 +21,6 @@ log = logging.getLogger(__name__)
 
 pos_include = ('NN', 'NNP', 'NNS')
 
-# These should never be tags...
-reader = csv.reader(open('data/stopwords.csv'))
-stop_words = CIList()
-for line in reader:
-    stop_words += line
                  
 class BasicTagger(object):
     """BasicTagger class for tagging English text"""
@@ -42,7 +39,7 @@ class BasicTagger(object):
         pos = nltk.pos_tag(tokens)
         log.info('POS before lower casing:%s', str(pos))
 
-        if cap_type == 'ALLCAPS':
+        if cap_type == CapType.ALLCAPS:
             # If the headline is in AllCAPS then the POS tagger
             # produces too many proper nouns, hence we de-capitilize text first
             tokens = bt.tokenize(text.lower())
