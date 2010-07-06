@@ -98,6 +98,12 @@ class SentenceTokenizer(object):
             return "MIXED_CAPITALIZED_STOPWORD", token
         else:
             return "MIXED_CAPITALIZED", token
+            
+    def first_shout_(scanner, token):
+        if token in stop_words:
+            return "FIRST_SHOUT_STOPWORD", token
+        else:
+            return "FIRST_SHOUT", token
     
     def mixed_capitalized_stop_(scanner, token):
         return "MIXED_CAPITALIZED_STOP", token
@@ -129,8 +135,11 @@ class SentenceTokenizer(object):
     scanner = re.Scanner([
         #Added acronym rule, will make identification accurate and normalization easier
         (r"\b([A-Z]\.)+[A-Z]", acronym_), 
-        (r"\b[A-Z][A-Z]+(ED|LY|ING|IZE)\b", shout_stop_), 
-        (r"\b[A-Z][A-Z]+\b", shout_),    
+        (r"^[A-Z][A-Z\-]+\b", first_shout_),
+        (r"(?<=\.\s)([A-Z][A-Z\-]+\b)", first_shout_),
+        (r"(?<=\.\s\s)([A-Z][A-Z\-]+\b)", first_shout_),
+        (r"(?<=\.\s\s\s)([A-Z][A-Z\-]+\b)", first_shout_),
+        
         (r"^[A-Z][a-z\-]+(ed|ly|ing|ize)\b", first_capitalized_stop_),
         (r"^[A-Z][a-z\-]+\b", first_capitalized_),
         (r"^[a-z\-]+(ed|ly|ing|ize)\b", first_lower_stop_),
@@ -149,6 +158,9 @@ class SentenceTokenizer(object):
         # lookbehind has to have fixed number of chars
         (r"(?<=\.\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
         (r"(?<=\.\s\s\s)([A-Z][a-z\-]+\b)", first_capitalized_),
+        
+        (r"\b[A-Z][A-Z]+(ED|LY|ING|IZE)\b", shout_stop_), 
+        (r"\b[A-Z][A-Z]+\b", shout_),    
         (r"\b[A-Z][a-z\-]+(ed|ly|ing|ize)\b", capitalized_stop_),
         (r"\b[A-Z][a-z\-]+\b", capitalized_),
         (r"\b[a-z]+(ed|ly|ing|ize)\b", lower_stop_),

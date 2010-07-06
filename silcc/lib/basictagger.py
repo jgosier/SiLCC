@@ -6,9 +6,9 @@ import csv
 import nltk
 
 from silcc.lib.util import CIList, stop_words # , capitalization_type
-from silcc.lib.capnormalizer import capitalization_type, CapType
 from silcc.lib.basictokenizer import BasicTokenizer
 from silcc.lib.singularizer import singularize
+from silcc.lib.normalizer import Normalizer
 
 
 log = logging.getLogger(__name__)
@@ -32,20 +32,13 @@ class BasicTagger(object):
             return []
 
         text = text.replace("'", "")
-        cap_type = capitalization_type(text)
-
         bt = BasicTokenizer()
+        n = Normalizer()
+        text = n.normalizer(text)
         tokens = bt.tokenize(text)
         pos = nltk.pos_tag(tokens)
-        log.info('POS before lower casing:%s', str(pos))
-
-        if cap_type == CapType.ALLCAPS:
-            # If the headline is in AllCAPS then the POS tagger
-            # produces too many proper nouns, hence we de-capitilize text first
-            tokens = bt.tokenize(text.lower())
-            pos = nltk.pos_tag(tokens)
-            log.info('POS after lower casing:%s', str(pos))
-
+        
+        
         # Only return those tokens whose pos is in the include list
         tags = [t[0] for t in pos if t[1] in pos_include]
 

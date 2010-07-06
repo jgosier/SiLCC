@@ -1,5 +1,5 @@
 """Given short snippet of text converts that text into REGULAR capitilization"""
-"""Final Text output is not perfectly formatted around full stop and hiphen"""
+#"""Final Text output is not perfectly formatted around full stop and hiphen"""
 import sys
 import math
 import pickle
@@ -23,7 +23,9 @@ class Normalizer(object):
         y = SentenceTokenizer.tokenize(d['text'])
         d['tokens'] = [x[0] for x in y]
         result = apply_multinomial_NB(C, V, prior, condprob, d)[0]
-        print result
+        
+        #print result
+        
         switch_normalizer = {
         'REGULAR':regular, 
         'GERMAN':german, 
@@ -32,7 +34,7 @@ class Normalizer(object):
         'LOWER':lower
         }
         text = switch_normalizer.get(result,other)(text,y)
-        return text
+        return text.replace(' .', '.')
     
 
 
@@ -73,18 +75,30 @@ def allcaps(text,y):
     return text
     
 def shout(text, y):
-    '''Convert from shout to Regular, This is as good as all lower'''
+    '''Convert from shout to Regular'''
     text = text.lower()
-    return lower(text, y)
-
+    a = []
+    for i, x in enumerate(y):
+        a.append(x[1])
+        #Add Cap Type Specific Rules
+        if (x[0] != 'ACRONYM'):
+            a[i] = a[i].lower()
+        if (x[0] == 'FIRST_SHOUT_STOPWORD' or x[0] == 'FIRST_SHOUT'):
+            a[i] = a[i].capitalize()
+        #End of Rules
+    text = ' '.join(a)
+    return text
+    
 def lower(text, y):
     '''Convert from lower to Regular'''
     a = []
     for i, x in enumerate(y):
         a.append(x[1])
         #Add Cap Type Specific Rules
-        if (x[0] == 'CAPITALIZED_STOPWORD' or x[0] == 'CAPITALIZED'):
-            a[i] = a[i].lower()
+        if (x[0] == 'FIRST_LOWER_STOPWORD' or x[0] == 'FIRST_LOWER'):
+            a[i] = a[i].capitalize()
+        if (x[0] == 'ACRONYM'):
+            a[i] = a[i].upper()
         #End of Rules
     text = ' '.join(a)
     return text
