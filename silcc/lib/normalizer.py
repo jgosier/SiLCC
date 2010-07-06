@@ -5,6 +5,12 @@ import math
 import pickle
 
 from silcc.lib.sentencetokenizer import SentenceTokenizer
+from sqlalchemy import select, and_, create_engine, MetaData,  Table, Column, Integer, String, ForeignKey
+import sqlalchemy as sa
+
+engine = create_engine(conf['sqlalchemy.url'], echo=True)
+meta = MetaData()
+conn = engine.connect()
 
 unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
 C = unpickle[0]
@@ -16,35 +22,37 @@ class NormalizerException(Exception):
     pass 
     
 class Normalizer(object):
+    """Normalizer class for which instance should be created"""
     
     def normalizer(self, text):
+        """To be called with the text string and returns normalized version"""
         
-        d = dict(text=text)
-        y = SentenceTokenizer.tokenize(d['text'])
-        d['tokens'] = [x[0] for x in y]
-        result = apply_multinomial_NB(C, V, prior, condprob, d)[0]
+        dt_ = dict(text=text)
+        ya_ = SentenceTokenizer.tokenize(dt_['text'])
+        dt_['tokens'] = [xb_[0] for xb_ in ya_]
+        result = apply_multinomial_NB(C, V, prior, condprob, dt_)[0]
         
         #print result
         
         switch_normalizer = {
-        'REGULAR':regular, 
-        'GERMAN':german, 
-        'ALLCAPS':allcaps, 
-        'SHOUT':shout, 
-        'LOWER':lower
-        }
-        text = switch_normalizer.get(result,other)(text,y)
+        'REGULAR' : regular, 
+        'GERMAN' : german, 
+        'ALLCAPS' : allcaps, 
+        'SHOUT' : shout, 
+        'LOWER' : lower }
+        text = switch_normalizer.get(result, other)(text, ya_)
         return text.replace(' .', '.')
     
 
 
-def apply_multinomial_NB(C, V, prior, condprob, d):
-    W = d['tokens']
+def apply_multinomial_NB(C, V, prior, condprob, dt_):
+    W = dt_['tokens']
     score = {}
     for c in C:
         score[c] = math.log(prior[c])
         for t in W:
-            score[c] += math.log(condprob.get((t, c), 0.4)) # if the word has never been seen use 0.4?
+            # if the word has never been seen use 0.4?
+            score[c] += math.log(condprob.get((t, c), 0.4)) 
     max_score = score[C[0]]
     max_cat = C[0]
     for k, v in score.iteritems():
@@ -54,64 +62,73 @@ def apply_multinomial_NB(C, V, prior, condprob, d):
     return max_cat, max_score
 
 
-def regular(text,y):
+def regular(text, ya_):
     '''Convert from Regular to Regular'''
     return text
     
-def german(text,y):
+def german(text, ya_):
     '''Convert from German to German'''
     return text
     
-def allcaps(text,y):
+def allcaps(text, ya_):
     '''Convert from AllCaps to Regular'''
-    a = []
-    for i, x in enumerate(y):
-        a.append(x[1])
+    ab_ = []
+    for i, xb_ in enumerate(ya_):
+        ab_.append(xb_[1])
         #Add Cap Type Specific Rules
-        if (x[0] == 'CAPITALIZED_STOPWORD' or x[0] == 'CAPITALIZED' or x[1] == 'A'):
-            a[i] = a[i].lower()
+        if (xb_[0] == 'CAPITALIZED_STOPWORD' or 
+            xb_[0] == 'CAPITALIZED' or xb_[1] == 'A'):
+            ab_[i] = ab_[i].lower()
         #End of Rules
-    text = ' '.join(a)
+    text = ' '.join(ab_)
     return text
     
-def shout(text, y):
+def shout(text, ya_):
     '''Convert from shout to Regular'''
     text = text.lower()
-    a = []
-    for i, x in enumerate(y):
-        a.append(x[1])
+    ab_ = []
+    for i, xb_ in enumerate(ya_):
+        ab_.append(xb_[1])
         #Add Cap Type Specific Rules
-        if (x[0] != 'ACRONYM'):
-            a[i] = a[i].lower()
-        if (x[0] == 'FIRST_SHOUT_STOPWORD' or x[0] == 'FIRST_SHOUT'):
-            a[i] = a[i].capitalize()
+        if (xb_[0] != 'ACRONYM'):
+            ab_[i] = ab_[i].lower()
+        if (xb_[0] == 'FIRST_SHOUT_STOPWORD' or xb_[0] == 'FIRST_SHOUT'):
+            ab_[i] = ab_[i].capitalize()
+        
+        #Query Acronmys Database, if present then convert to shout
+        #Query Places Database, if present then convert to Capitalize
+        
         #End of Rules
-    text = ' '.join(a)
+    text = ' '.join(ab_)
     return text
     
-def lower(text, y):
+def lower(text, ya_):
     '''Convert from lower to Regular'''
-    a = []
-    for i, x in enumerate(y):
-        a.append(x[1])
+    ab_ = []
+    for i, xb_ in enumerate(ya_):
+        ab_.append(xb_[1])
         #Add Cap Type Specific Rules
-        if (x[0] == 'FIRST_LOWER_STOPWORD' or x[0] == 'FIRST_LOWER'):
-            a[i] = a[i].capitalize()
-        if (x[0] == 'ACRONYM'):
-            a[i] = a[i].upper()
+        if (xb_[0] == 'FIRST_LOWER_STOPWORD' or xb_[0] == 'FIRST_LOWER'):
+            ab_[i] = ab_[i].capitalize()
+        if (xb_[0] == 'ACRONYM'):
+            ab_[i] = ab_[i].upper()
+        
+        #Query Acronmys Database, if present then convert to shout
+        #Query Places Database, if present then convert to Capitalize
+        
         #End of Rules
-    text = ' '.join(a)
+    text = ' '.join(ab_)
     return text
 
-def other(text, y):
+def other(text, ya_):
     '''Leave as it is'''
     return text
 
 if __name__ == '__main__':
     text = sys.argv[1]
-    n = Normalizer()
-    text = n.normalizer(text)
-    print text
+    N = Normalizer()
+    print N.normalizer(text)
+
 
   
     
