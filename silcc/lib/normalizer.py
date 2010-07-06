@@ -72,19 +72,12 @@ def allcaps(text,y):
     text = ' '.join(a)
     return text
     
-def shout(text, d, y):
-    '''Convert from shout to Regular'''
-    a = []
-    for i, x in enumerate(y):
-        a.append(x[1])
-        #Add Cap Type Specific Rules
-        if (x[0] != 'ACRONYM' or x[0] == 'CAPITALIZED'):
-            a[i] = a[i].lower()
-        #End of Rules
-    text = ' '.join(a)
-    return text
+def shout(text, y):
+    '''Convert from shout to Regular, This is as good as all lower'''
+    text = text.lower()
+    return lower(text, y)
 
-def lower(text, d, y):
+def lower(text, y):
     '''Convert from lower to Regular'''
     a = []
     for i, x in enumerate(y):
@@ -96,7 +89,7 @@ def lower(text, d, y):
     text = ' '.join(a)
     return text
 
-def other(text, d, y):
+def other(text, y):
     '''Leave as it is'''
     return text
 
