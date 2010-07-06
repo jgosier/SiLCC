@@ -5,12 +5,9 @@ import math
 import pickle
 
 from silcc.lib.sentencetokenizer import SentenceTokenizer
-from sqlalchemy import select, and_, create_engine, MetaData,  Table, Column, Integer, String, ForeignKey
-import sqlalchemy as sa
 
-engine = create_engine(conf['sqlalchemy.url'], echo=True)
-meta = MetaData()
-conn = engine.connect()
+
+
 
 unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
 C = unpickle[0]
