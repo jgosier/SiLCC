@@ -5,9 +5,28 @@ import math
 import pickle
 
 from silcc.lib.sentencetokenizer import SentenceTokenizer
+from sqlalchemy import select, and_, create_engine, MetaData
+from sqlalchemy.orm import sessionmaker
+from optparse import OptionParser # command-line option parser   
+from paste.deploy import appconfig
+from pylons import app_globals
+from silcc.config.environment import load_environment
+from sqlalchemy import select, and_, create_engine, MetaData
+import sqlalchemy as sa
 
-
-
+parser = OptionParser()
+parser.add_option('--ini',
+                  help='INI file to use for application settings',
+                  type='str',
+                  default='development_dump.ini')
+(options, args) = parser.parse_args()
+conf = appconfig('config:' + options.ini, relative_to='.')
+load_environment(conf.global_conf, conf.local_conf)
+engine = create_engine(conf['sqlalchemy.url'], echo=False)
+meta = MetaData()
+conn = engine.connect()
+acro_table = sa.Table('acronyms', meta, autoload=True, autoload_with=engine)
+geo_table = sa.Table('places', meta, autoload=True, autoload_with=engine)
 
 unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
 C = unpickle[0]
@@ -92,8 +111,24 @@ def shout(text, ya_):
         if (xb_[0] == 'FIRST_SHOUT_STOPWORD' or xb_[0] == 'FIRST_SHOUT'):
             ab_[i] = ab_[i].capitalize()
         
-        #Query Acronmys Database, if present then convert to shout
         #Query Places Database, if present then convert to Capitalize
+        sel = select([geo_table.c.name],  geo_table.c.name== xb_[1])   
+        result = conn.execute(sel)
+        j=0
+        for row in result:
+            j+=1
+        if j > 0:
+            ab_[i] = ab_[i].capitalize()
+                
+        
+        #Query Acronmys Database, if present then convert to shout
+        sel = select([acro_table.c.name],  acro_table.c.name== xb_[1])   
+        result = conn.execute(sel)
+        j=0
+        for row in result:
+            j+=1
+        if j > 0:
+            ab_[i] = ab_[i].upper()
         
         #End of Rules
     text = ' '.join(ab_)
@@ -110,8 +145,25 @@ def lower(text, ya_):
         if (xb_[0] == 'ACRONYM'):
             ab_[i] = ab_[i].upper()
         
-        #Query Acronmys Database, if present then convert to shout
         #Query Places Database, if present then convert to Capitalize
+        sel = select([geo_table.c.name],  geo_table.c.name == xb_[1])   
+        result = conn.execute(sel)
+        j=0
+        for row in result:
+            j+=1
+        if j > 0:
+            ab_[i] = ab_[i].capitalize()
+                
+        
+        #Query Acronmys Database, if present then convert to shout
+        sel = select([acro_table.c.name],  acro_table.c.name == xb_[1])   
+        result = conn.execute(sel)
+        j=0
+        for row in result:
+            j+=1
+        if j > 0:
+            ab_[i] = ab_[i].upper()
+        
         
         #End of Rules
     text = ' '.join(ab_)

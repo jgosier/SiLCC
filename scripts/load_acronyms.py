@@ -20,14 +20,6 @@ from silcc.config.environment import load_environment
 from sqlalchemy import select, and_, create_engine, MetaData,  Table, Column, Integer, String, ForeignKey
 import sqlalchemy as sa
 
-'''
-See: http://download.geonames.org/export/dump/
-We only want to load places of feature class P 
-(for now, perhaps more in future?)
-'''
-
-#from sqlalchemy.orm import eagerload
-
 if __name__ == '__main__':
 
     parser = OptionParser()
@@ -43,7 +35,7 @@ if __name__ == '__main__':
 
     conf = appconfig('config:' + options.ini, relative_to='.')
     load_environment(conf.global_conf, conf.local_conf)
-
+    
     engine = create_engine(conf['sqlalchemy.url'], echo=True)
     meta = MetaData()
     conn = engine.connect()
