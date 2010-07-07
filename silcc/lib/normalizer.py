@@ -26,7 +26,7 @@ engine = create_engine(conf['sqlalchemy.url'], echo=False)
 meta = MetaData()
 conn = engine.connect()
 acro_table = sa.Table('acronyms', meta, autoload=True, autoload_with=engine)
-geo_table = sa.Table('places', meta, autoload=True, autoload_with=engine)
+geo_table = sa.Table('countries_new', meta, autoload=True, autoload_with=engine)
 
 unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
 C = unpickle[0]
@@ -112,7 +112,8 @@ def shout(text, ya_):
             ab_[i] = ab_[i].capitalize()
         
         #Query Places Database, if present then convert to Capitalize
-        sel = select([geo_table.c.name],  geo_table.c.name== xb_[1])   
+        xc_ = xb_[1] + '\n' #dirty fix for \n in country database
+        sel = select([geo_table.c.name],  geo_table.c.name == xc_)    
         result = conn.execute(sel)
         j=0
         for row in result:
@@ -146,7 +147,8 @@ def lower(text, ya_):
             ab_[i] = ab_[i].upper()
         
         #Query Places Database, if present then convert to Capitalize
-        sel = select([geo_table.c.name],  geo_table.c.name == xb_[1])   
+        xc_ = xb_[1] + '\n' #dirty fix for \n in country database
+        sel = select([geo_table.c.name],  geo_table.c.name == xc_)   
         result = conn.execute(sel)
         j=0
         for row in result:
