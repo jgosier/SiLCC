@@ -12,5 +12,5 @@ def test_normalizer():
     result = n.normalizer('LET US SHOUT SOME MORE. PLAY HARD. NASA U.S.A')
     assert result == 'Let us shout some more. Play hard. NASA U.S.A'
     
-    result = n.normalizer('LET US SHOUT SOME MORE. PLAY HARD. U.S.A AMERICA')
+    result = n.normalizer('LET US SHOUT SOME MORE. PLAY HARD. U.S.A BRAZIL')
     assert result == 'Let us shout some more. Play hard. U.S.A Brazil'
