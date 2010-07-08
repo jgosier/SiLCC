@@ -7,7 +7,7 @@ def test_sentencetokenizer():
     tokens = SentenceTokenizer.tokenize("This is a sentence. And this is another.")
     assert tokens == [('FIRST_CAPITALIZED_STOPWORD', 'This'), ('LOWER_STOPWORD', 'is'),
 		     ('LOWER_STOPWORD', 'a'), ('LOWER', 'sentence'), ('TERMINATOR', '.'),
-                     ('FIRST_CAPITALIZED_STOPWORD', 'And'), ('LOWER_STOPWORD', 'this'),
+                     ('CAPITALIZED_STOPWORD', 'And'), ('LOWER_STOPWORD', 'this'),
                      ('LOWER_STOPWORD', 'is'), ('LOWER', 'another'), ('TERMINATOR', '.')]
 
     tokens = SentenceTokenizer.tokenize("This Is A Sentence Of Type Allcaps.")
