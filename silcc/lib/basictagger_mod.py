@@ -1,4 +1,5 @@
 """Provides the BasicTagger class which tags English language text"""
+"""Mod for adjective-noun association, would work for newspaper headlines & not tweets"""
 import logging
 import sys
 import csv
@@ -40,10 +41,11 @@ class BasicTagger(object):
         text = n.normalizer(text)
         
         tokens = bt.tokenize(text)
+
         pos = nltk.pos_tag(tokens)
-        for a in pos:
-            print a  
-        
+
+#        for word_ in pos:
+#            print word_
         
         # Only return those tokens whose pos is in the include list
         #tags = [t[0] for t in pos if t[1] in pos_include]
@@ -51,15 +53,13 @@ class BasicTagger(object):
         tags = []
         
         for i, t in enumerate(pos):
-            if ((pos[i-1][1] in pos_adj) and (pos[i][1] in pos_include)):
+            if (i>0 and (pos[i-1][1] in pos_adj) and (pos[i][1] in pos_include)  and (not(pos[i][0] in stop_words)) and (not(pos[i-1][0] in stop_words))):
                 temp = pos[i-1][0] + " " + pos[i][0]
                 tags.append(temp)
-            elif(pos[i][1] in pos_include):
+           #if(pos[i][1] in pos_include):  #uncomment for repeating individually also   
+            elif(pos[i][1] in pos_include and (not(pos[i][0] in stop_words))):
                 tags.append(pos[i][0])
     
-        print pos[i][0] + " " + pos[i][1]
-            
-
         # Now exclude stopwords...
         tags = [t for t in tags if not t in stop_words]
         
@@ -69,9 +69,9 @@ class BasicTagger(object):
         # We want to preserve the order of tags purely for esthetic value
         # hence we will not use set()
         # We will also preserve uppercased tags if they are the first occurence
-
+        #print tags
         tags_ = CIList()
-        print tags
+
         for t in tags:
             if t in tags_: 
                 continue
