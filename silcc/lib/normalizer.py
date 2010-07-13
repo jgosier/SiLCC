@@ -8,12 +8,16 @@ from silcc.lib.sentencetokenizer import SentenceTokenizer
 
 from sqlalchemy import select, and_, create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
-from optparse import OptionParser # command-line option parser
+#from optparse import OptionParser # command-line option parser
 from paste.deploy import appconfig
 from pylons import app_globals
 from silcc.config.environment import load_environment
 from sqlalchemy import select, and_, create_engine, MetaData
 import sqlalchemy as sa
+
+from silcc.model.meta import Session
+import silcc.model as model
+
 
 #parser = OptionParser()
 #parser.add_option('--ini',
@@ -95,7 +99,9 @@ def allcaps(text, ya_):
         ab_.append(xb_[1])
         #Add Cap Type Specific Rules
         if (xb_[0] == 'CAPITALIZED_STOPWORD' or 
-            xb_[0] == 'CAPITALIZED' or xb_[1] == 'A'):
+            xb_[0] == 'CAPITALIZED' or xb_[0] == 'FIRST_CAPITALIZED_STOPWORD' 
+            or xb_[0] == 'FIRST_CAPITALIZED'or xb_[1] == 'A'):
+            
             ab_[i] = ab_[i].lower()
         #End of Rules
     text = ' '.join(ab_)
@@ -110,12 +116,11 @@ def shout(text, ya_):
         #Add Cap Type Specific Rules
         if (xb_[0] != 'ACRONYM'):
             ab_[i] = ab_[i].lower()
-        if (xb_[0] == 'FIRST_SHOUT_STOPWORD' or xb_[0] == 'FIRST_SHOUT'):
-            ab_[i] = ab_[i].capitalize()
+#        if (xb_[0] == 'FIRST_SHOUT_STOPWORD' or xb_[0] == 'FIRST_SHOUT'):
+#            ab_[i] = ab_[i].capitalize()
         
 #        #Query Places Database, if present then convert to Capitalize
-#        xc_ = xb_[1] + '\n' #dirty fix for \n in country database
-#        sel = select([geo_table.c.name],  geo_table.c.name == xc_)    
+#        sel = select([geo_table.c.name],  geo_table.c.name == xb_[1])    
 #        result = conn.execute(sel)
 #        j=0
 #        for row in result:
@@ -144,14 +149,13 @@ def lower(text, ya_):
     for i, xb_ in enumerate(ya_):
         ab_.append(xb_[1])
         #Add Cap Type Specific Rules
-        if (xb_[0] == 'FIRST_LOWER_STOPWORD' or xb_[0] == 'FIRST_LOWER'):
-            ab_[i] = ab_[i].capitalize()
+#        if (xb_[0] == 'FIRST_LOWER_STOPWORD' or xb_[0] == 'FIRST_LOWER'):
+#            ab_[i] = ab_[i].capitalize()
         if (xb_[0] == 'ACRONYM'):
             ab_[i] = ab_[i].upper()
 
 #        #Query Places Database, if present then convert to Capitalize
-#        xc_ = xb_[1] + '\n' #dirty fix for \n in country database
-#        sel = select([geo_table.c.name],  geo_table.c.name == xc_)    
+#        sel = select([geo_table.c.name],  geo_table.c.name == xb_[1])    
 #        result = conn.execute(sel)
 #        j=0
 #        for row in result:

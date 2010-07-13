@@ -81,6 +81,9 @@ $ easy_install sqlalchemy-migrate
 
 $ python db_repository/manage.py version_control  mysql://silcc:silcc@localhost:3306/silcc
 
+The database syntax is of the following format mysql://username:password@localhost:3306/database_name
+The password will be of the database that you have created above and not your mysql root password.
+
 This will create the migrate_version table in your database and set the
 initial version to 0.
 
@@ -99,7 +102,7 @@ Since the manage.py will be specific to your local instance it is not included i
 
 4) Now run a db update to generate the initial schema:
 
-$ python manage.py update
+$ python manage.py upgrade
 
 5) The Web Service API needs to have one or more valid keys in the apikey table.
 For testing purposes add a key with a valid_domains value of '*' (valid from all domains)

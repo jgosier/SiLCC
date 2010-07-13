@@ -38,14 +38,14 @@ class BasicTagger(object):
         
         #Call to Capitalization Normalizer.
         n = Normalizer()
-        text = n.normalizer(text)
+        #text = n.normalizer(text)
         
         tokens = bt.tokenize(text)
 
         pos = nltk.pos_tag(tokens)
 
-#        for word_ in pos:
-#            print word_
+        for word_ in pos:
+            print word_
         
         # Only return those tokens whose pos is in the include list
         #tags = [t[0] for t in pos if t[1] in pos_include]

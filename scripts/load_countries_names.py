@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser.add_option('--filename',
                       help='File containing place names data.',
                       type='str',
-                      default='SmallCoList.txt')
+                      default='data/SmallCoList.txt')
     (options, args) = parser.parse_args()
 
     conf = appconfig('config:' + options.ini, relative_to='.')
@@ -40,15 +40,13 @@ if __name__ == '__main__':
     meta = MetaData()
     conn = engine.connect()
     print conn
-    co_table = Table('countries_new',  meta, Column('name',  String(200),  primary_key=False))
-    meta.create_all(engine)
-    co_table = sa.Table('countries_new', meta, autoload=True, autoload_with=engine)
+
+    co_table = sa.Table('countries', meta, autoload=True, autoload_with=engine)
     fh = open(options.filename)
     line = fh.readline()
     while line:
-        parts = line.split('\t')
-        name = parts[0]
-        insert = co_table.insert().values(name=name)
+        line = line.strip('\n')
+        insert = co_table.insert().values(name=line)
         print insert.compile().params
         conn.execute(insert)
         line = fh.readline()

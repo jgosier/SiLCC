@@ -19,25 +19,34 @@ class SentenceTokenizer(object):
 
 
     # Scanner callbacks...
-    '''
-    Redundant
-   def upper_(scanner, token):
+ 
+    def first_capitalized_(scanner, token):
+        """For the first word in a report"""
         if token in stop_words:
-            return "UPPER_STOPWORD", token
+            return "FIRST_CAPITALIZED_STOPWORD", token
         else:
-            return "UPPER", token
-    '''
+            return "FIRST_CAPITALIZED", token
 
-    def lower_(scanner, token):
+    def first_capitalized_stop_(scanner, token):
+        return "FIRST_CAPITALIZED_STOP", token
+
+    def first_lower_(scanner, token):
+        """For the first word in a report"""
         if token in stop_words:
-            return "LOWER_STOPWORD", token
+            return "FIRST_LOWER_STOPWORD", token
         else:
-            return "LOWER", token
+            return "FIRST_LOWER", token
     
-    def lower_stop_(scanner, token):
-        return "LOWER_STOP", token
+    def first_lower_stop_(scanner, token):
+        return "FIRST_LOWER_STOP", token
         
-    
+    def first_shout_(scanner, token):
+        if token in stop_words:
+            return "FIRST_SHOUT_STOPWORD", token
+        else:
+            return "FIRST_SHOUT", token
+
+
     def capitalized_(scanner, token):
         """Capitalized means the first letter is upper only"""
         if token in stop_words:
@@ -48,16 +57,14 @@ class SentenceTokenizer(object):
     def capitalized_stop_(scanner, token):
         return "CAPITALIZED_STOP", token
 
-
-    def first_capitalized_(scanner, token):
-        """For the first word in a report"""
+    def lower_(scanner, token):
         if token in stop_words:
-            return "FIRST_CAPITALIZED_STOPWORD", token
+            return "LOWER_STOPWORD", token
         else:
-            return "FIRST_CAPITALIZED", token
-
-    def first_capitalized_stop_(scanner, token):
-        return "FIRST_CAPITALIZED_STOP", token
+            return "LOWER", token
+    
+    def lower_stop_(scanner, token):
+        return "LOWER_STOP", token
 
 
     def shout_(scanner, token):
@@ -70,18 +77,7 @@ class SentenceTokenizer(object):
     def shout_stop_(scanner, token):
         return "SHOUT_STOP", token
 
-
-    def first_lower_(scanner, token):
-        """For the first word in a report"""
-        if token in stop_words:
-            return "FIRST_LOWER_STOPWORD", token
-        else:
-            return "FIRST_LOWER", token
-    
-    def first_lower_stop_(scanner, token):
-        return "FIRST_LOWER_STOP", token
-    
-    
+   
     def mixed_(scanner, token):
         """tHis is mixed, so is tHIs"""
         if token in stop_words:
@@ -99,16 +95,10 @@ class SentenceTokenizer(object):
         else:
             return "MIXED_CAPITALIZED", token
             
-    def first_shout_(scanner, token):
-        if token in stop_words:
-            return "FIRST_SHOUT_STOPWORD", token
-        else:
-            return "FIRST_SHOUT", token
-    
+   
     def mixed_capitalized_stop_(scanner, token):
         return "MIXED_CAPITALIZED_STOP", token
     
-
     def other_(scanner, token):
         if token in stop_words:
             return "OTHER_STOPWORD", token

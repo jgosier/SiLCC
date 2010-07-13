@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser.add_option('--filename',
                       help='File containing place names data.',
                       type='str',
-                      default='acronyms.txt')
+                      default='data/acronyms.txt')
     (options, args) = parser.parse_args()
 
     conf = appconfig('config:' + options.ini, relative_to='.')
@@ -39,16 +39,13 @@ if __name__ == '__main__':
     engine = create_engine(conf['sqlalchemy.url'], echo=True)
     meta = MetaData()
     conn = engine.connect()
-    print conn
-    acro_table = Table('acronyms',  meta, Column('name',  String(200),  primary_key=True))
-    meta.create_all(engine)
+
     places_table = sa.Table('acronyms', meta, autoload=True, autoload_with=engine)
     fh = open(options.filename)
     line = fh.readline()
     while line:
-        parts = line.split('\t')
-        name = parts[0]
-        insert = places_table.insert().values(name=name)
+	line = line.strip('\n')
+        insert = places_table.insert().values(name=line)
         print insert.compile().params
         conn.execute(insert)
         line = fh.readline()
