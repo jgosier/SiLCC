@@ -7,6 +7,7 @@ from sqlalchemy import orm
 from silcc.model import meta
 from silcc.model.apicall import APICall
 from silcc.model.apikey import APIKey
+from silcc.model.country import Country
 #from silcc.model.place import Place
 from silcc.model.example import Example
 
@@ -26,3 +27,6 @@ def init_model(engine):
     Example.table = example_table
     orm.mapper(Example, Example.table)
 
+    country_table = sa.Table('countries', meta.metadata, autoload=True, autoload_with=engine)
+    Country.table = country_table
+    orm.mapper(Country, Country.table)

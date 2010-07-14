@@ -3,36 +3,15 @@
 import sys
 import math
 import pickle
+from optparse import OptionParser # command-line option parser                                                                                                  
 
 from silcc.lib.sentencetokenizer import SentenceTokenizer
 
-from sqlalchemy import select, and_, create_engine, MetaData
-from sqlalchemy.orm import sessionmaker
-#from optparse import OptionParser # command-line option parser
 from paste.deploy import appconfig
-from pylons import app_globals
+from sqlalchemy import select, and_, create_engine, MetaData, Table
+
+from silcc.model.meta import metadata, Session
 from silcc.config.environment import load_environment
-from sqlalchemy import select, and_, create_engine, MetaData
-import sqlalchemy as sa
-
-from silcc.model.meta import Session
-import silcc.model as model
-
-
-#parser = OptionParser()
-#parser.add_option('--ini',
-#                  help='INI file to use for application settings',
-#                  type='str',
-#                  default='development_dump.ini')
-#(options, args) = parser.parse_args()
-#conf = appconfig('config:' + options.ini, relative_to='.')
-#load_environment(conf.global_conf, conf.local_conf)
-#engine = create_engine(conf['sqlalchemy.url'], echo=False)
-#meta = MetaData()
-#conn = engine.connect()
-#acro_table = sa.Table('acronyms', meta, autoload=True, autoload_with=engine)
-#geo_table = sa.Table('countries_new', meta, autoload=True, autoload_with=engine)
-
 
 unpickle = pickle.load(open('data/weights/capnorm_weights.pickle'))
 C = unpickle[0]
@@ -45,6 +24,12 @@ class NormalizerException(Exception):
     
 class Normalizer(object):
     """Normalizer class for which instance should be created"""
+
+    def __init__(self, engine):
+        self.engine = engine
+        self.country_table = Table('countries', metadata, autoload=True, autoload_with=engine)
+        
+    
     
     def normalizer(self, text):
         """To be called with the text string and returns normalized version"""
@@ -53,7 +38,13 @@ class Normalizer(object):
         ya_ = SentenceTokenizer.tokenize(dt_['text'])
         dt_['tokens'] = [xb_[0] for xb_ in ya_]
         result = apply_multinomial_NB(C, V, prior, condprob, dt_)[0]
-        
+
+        # example of reading from the db
+        country_table = self.country_table
+        query = select([country_table.c.name], from_obj=[country_table])
+        for country_row in Session.execute(query):
+            print country_row
+
         #print result
         
         switch_normalizer = {
@@ -118,6 +109,7 @@ def shout(text, ya_):
             ab_[i] = ab_[i].lower()
 #        if (xb_[0] == 'FIRST_SHOUT_STOPWORD' or xb_[0] == 'FIRST_SHOUT'):
 #            ab_[i] = ab_[i].capitalize()
+
         
 #        #Query Places Database, if present then convert to Capitalize
 #        sel = select([geo_table.c.name],  geo_table.c.name == xb_[1])    
@@ -184,8 +176,17 @@ def other(text, ya_):
     return text
 
 if __name__ == '__main__':
-    text = sys.argv[1]
-    N = Normalizer()
+    parser = OptionParser()
+    parser.add_option('--ini',
+                      help='INI file to use for application settings',
+                      type='str',
+                      default='development.ini')
+    (options, args) = parser.parse_args()
+    conf = appconfig('config:' + 'prod.ini', relative_to='.')
+    load_environment(conf.global_conf, conf.local_conf)
+    engine = create_engine(conf['sqlalchemy.url'], echo=False)
+    text = args[0]
+    N = Normalizer(engine=engine)
     print N.normalizer(text)
 
 
