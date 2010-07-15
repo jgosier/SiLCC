@@ -14,6 +14,7 @@ from silcc.model.example import Example
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
     Session.configure(bind=engine)
+    meta.engine = engine
 
     apikey_table = sa.Table('apikey', meta.metadata, autoload=True, autoload_with=engine)
     APIKey.table = apikey_table
